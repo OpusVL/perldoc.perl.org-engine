@@ -486,9 +486,6 @@ sub run {
             # Anything before this the POD is to crap tastic to worry about, only bother with stable releases
             next if ($major < 6);
 
-            next if ($major != 10 && $major != 12);
-            next if ($minor != 1);
-
             # Add the complete version to perl_version array for speed later on
             push @perl_versions,[$major,$minor];
 
