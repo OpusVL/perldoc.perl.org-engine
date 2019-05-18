@@ -11,7 +11,7 @@ our $VERSION = '0.01';
 
 our %option = (
   output_path  => '/tmp/perldoc',
-  site_href    => 'http://perldoc.perl.org',
+  site_href    => 'https://perldoc.perl.org',
   site_title   => 'perldoc.perl.org',
   perl_version => sprintf("%vd",$^V),
   inc          => [@INC],

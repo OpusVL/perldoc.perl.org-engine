@@ -84,7 +84,7 @@ sub view_pod {
 sub view_head1 {
     my ($self, $head1) = @_;
     my $title = $head1->title->present($self);
-    return "<h1>$title</h1>\n\n"
+    return "<h2 class='h2' >$title</h2>\n\n"
 	. $head1->content->present($self);
 }
 
@@ -92,7 +92,7 @@ sub view_head1 {
 sub view_head2 {
     my ($self, $head2) = @_;
     my $title = $head2->title->present($self);
-    return "<h2>$title</h2>\n"
+    return "<h3 class='h3'>$title</h3>\n"
 	. $head2->content->present($self);
 }
 
@@ -100,7 +100,7 @@ sub view_head2 {
 sub view_head3 {
     my ($self, $head3) = @_;
     my $title = $head3->title->present($self);
-    return "<h3>$title</h3>\n"
+    return "<h4 class='h4'>$title</h4>\n"
 	. $head3->content->present($self);
 }
 
@@ -108,7 +108,7 @@ sub view_head3 {
 sub view_head4 {
     my ($self, $head4) = @_;
     my $title = $head4->title->present($self);
-    return "<h4>$title</h4>\n"
+    return "<h5 class='h5'>$title</h5>\n"
 	. $head4->content->present($self);
 }
 
@@ -171,7 +171,7 @@ sub view_item {
             my $anchor = $title;
             $anchor =~ s/^\s*|\s*$//g; # strip leading and closing spaces
             $anchor =~ s/\W/_/g;
-            $title = qq{<a name="item_$anchor"></a><b>$title</b>};
+            $title = qq{<a aria-label="item_$anchor"><strong>$title</strong></a>};
         }
     }
 
@@ -213,13 +213,13 @@ sub view_verbatim {
 	s/</&lt;/g;
 	s/>/&gt;/g;
     }
-    return "<pre>$text</pre>\n\n";
+    return "<pre class='verbatim'>$text</pre>\n\n";
 }
 
 
 sub view_seq_bold {
     my ($self, $text) = @_;
-    return "<b>$text</b>";
+    return "<strong>$text</strong>";
 }
 
 

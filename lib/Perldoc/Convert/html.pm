@@ -56,13 +56,13 @@ sub build_index {
     foreach my $head1 ($pod->head1) {
       my $title  = $head1->title->present('Pod::POM::View::Text');
       my $anchor = escape($head1->title->present('Pod::POM::View::Text'));
-      $index   .= qq{<li><a href="#$anchor">$title</a>};
+      $index   .= qq{<li><a href="#$anchor">$title</a></li>};
       if ($head1->head2->[0]) {
         $index .= '<ul>';
           foreach my $head2 ($head1->head2) {
             $title  = $head2->title->present('Pod::POM::View::Text');
             $anchor = escape($head2->title->present('Pod::POM::View::Text'));
-            $index .= qq{<li><a href="#$anchor">$title</a>};
+            $index .= qq{<li><a href="#$anchor">$title</a></li>};
           }
         $index .= '</ul>';
       }
@@ -86,7 +86,7 @@ sub view_pod {
 sub view_for {
   my ($self,$for) = @_;
   if ($for->format eq 'text') {
-    return '<pre>'.$for->text.'</pre>';
+    return '<pre class="verbatim">'.$for->text.'</pre>';
   }
   if ($for->format eq 'html') {
     return $for->text;
@@ -101,7 +101,7 @@ sub view_begin {
   my ($self,$begin) = @_;
   #warn Dumper($begin);
   if ($begin->format eq 'text') {
-    return '<pre>'.$begin->content->present($self).'</pre>';
+    return '<pre class="verbatim">'.$begin->content->present($self).'</pre>';
   }
   if ($begin->format eq 'html') {
     $Pod::POM::View::HTML::HTML_PROTECT++;
@@ -119,7 +119,7 @@ sub view_head1 {
   my ($self,$head1) = @_;
   my $title = $head1->title->present($self);
   my $anchor = escape($head1->title->present('Pod::POM::View::Text'));
-  return qq{<a name="$anchor"></a><h1>$title</h1>\n}.
+  return qq{<a id="$anchor"></a><h2 class='h2' >$title</h2>\n}.
          $head1->content->present($self);
 }
 
@@ -130,7 +130,7 @@ sub view_head2 {
   my ($self,$head2) = @_;
   my $title = $head2->title->present($self);
   my $anchor = escape($head2->title->present('Pod::POM::View::Text'));
-  return qq{<a name="$anchor"></a><h2>$title</h2>\n}.
+  return qq{<a id="$anchor"></a><h3 class='h3' >$title</h3>\n}.
          $head2->content->present($self);
 }
 
@@ -141,7 +141,7 @@ sub view_head3 {
   my ($self,$head3) = @_;
   my $title = $head3->title->present($self);
   my $anchor = escape($head3->title->present('Pod::POM::View::Text'));
-  return qq{<a name="$anchor"></a><h3>$title</h3>\n}.
+  return qq{<a id="$anchor"></a><h4 class='h4' >$title</h4>\n}.
          $head3->content->present($self);
 }
 
@@ -200,7 +200,7 @@ sub view_item {
     }
     if (length $title) {
       my $anchor = escape($item->title->present('Pod::POM::View::Text'));
-      $title = qq{<a name="$anchor"></a><b>$title</b>};
+      $title = qq{<a id="$anchor"></a><strong>$title</strong>};
     }
   }
   return $start_tag."$title\n".$item->content->present($self).$end_tag."\n";
@@ -294,7 +294,7 @@ sub view_seq_link {
         $href = '[P( path )P]'."functions/$page.html";
         return qq{<a href="$href">$page</a>};      
       } else {
-        $href = "http://search.cpan.org/perldoc/$page";
+        $href = "https://search.cpan.org/perldoc/$page";
       }        
     }
     if ($section && $document_name eq 'function' and (!$page or $page eq '')) {
@@ -369,7 +369,7 @@ sub _view_seq_link {
       $url = "$page.html";
       $url =~ s/::/\//g;
     } else {
-      $url = "http://search.cpan.org/perldoc/$page";
+      $url = "https://search.cpan.org/perldoc/$page";
     }
   }
   

@@ -1013,7 +1013,7 @@ And another view to render it in a different style:
 
     sub view_seq_bold {
 	my ($self, $text) = @_;
-	return "<b>$text</b>";
+	return "<strong>$text</strong>";
     }
 
     sub view_seq_italic {
@@ -1630,4 +1630,3 @@ output.  But don't take my word for it - see your local CPAN site for
 further details:
 
     http://www.cpan.org/modules/by-module/Pod/
-

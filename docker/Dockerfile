@@ -22,16 +22,8 @@ RUN cd /root \
     && git config --global user.name "Auto Commit Bot" \
     && git clone git@github.com:OpusVL/perldoc.perl.org.git 
 
-# Add a native cpanm to the primary base perl install
-# Setup for using CPAN
-ENV PERL_MM_USE_DEFAULT=1
-
-# Install base libraries
-RUN cpan LWP::Protocol::https App::cpanminus
-
-
 # Add in a few missing deps
-RUN cpanm Getopt::Long \
+RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
     Data::Dumper \
     LWP::UserAgent \
     HTML::TreeBuilder \
@@ -42,11 +34,9 @@ RUN cpanm Getopt::Long \
     Try::Tiny \
     File::Find \
     Template \
-    JSON \
     JSON::MaybeXS \
-    File::Copy::Recursive \
     Devel::PatchPerl@1.56 \
-    Perl::Tidy@20101217
+    Perl::Tidy@20101217 
 
 COPY dumb-init_* /dumbinit
 
