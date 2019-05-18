@@ -20,7 +20,7 @@ RUN cd /root \
     && echo "\tStrictHostKeyChecking no" >> .ssh/config \
     && git config --global user.email "autobot@opusvl.com" \
     && git config --global user.name "Auto Commit Bot" \
-    && git clone git@github.com:OpusVL/perldoc.perl.org.git 
+    && git clone git@github.com:OpusVL/perldoc.perl.org-engine.git 
 
 # Add in a few missing deps
 RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
