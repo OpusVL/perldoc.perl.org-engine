@@ -1,15 +1,24 @@
 #!/bin/bash
 
-ln -sf /opt/perl5/bin/perl /usr/bin/perl
 shopt -s expand_aliases
 
-mkdir -p /root/perldoc.perl.org-engine/work
-cd /root/perldoc.perl.org-engine/work
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-rm -Rf output-tmp
-git clone git@github.com:OpusVL/perldoc.perl.org-export.git output-tmp
-cp -fr output-tmp/. output/
-rm -Rf output-tmp
+
+cd /root
+git config --global user.email "autobot@opusvl.com" \
+git config --global user.name "Auto Commit Bot" \
+git clone git@github.com:OpusVL/perldoc.perl.org-engine.git
+
+cd perldoc.perl.org-engine
+mkdir work
+cd work
+git clone git@github.com:OpusVL/perldoc.perl.org-export.git output
+
+#git clone git@github.com:OpusVL/perldoc.perl.org-export.git work
+#rm -Rf output-tmp
+#git clone git@github.com:OpusVL/perldoc.perl.org-export.git output-tmp
+#cp -fr output-tmp/. output/
+#rm -Rf output-tmp
 
 while true
 do
