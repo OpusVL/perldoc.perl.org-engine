@@ -7,10 +7,11 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 cd /root
 git config --global user.email "autobot@opusvl.com" \
 git config --global user.name "Auto Commit Bot" \
-git clone git@github.com:OpusVL/perldoc.perl.org-engine.git
+git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
+cp -Rv engine/* perldoc.perl.org-engine/*
 
 cd perldoc.perl.org-engine
-mkdir work
+mkdir -p work
 cd work
 git clone git@github.com:OpusVL/perldoc.perl.org-export.git output
 

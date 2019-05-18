@@ -17,10 +17,7 @@ RUN cd /root \
     && chown -R root .ssh \
     && chmod -R 700 .ssh \
     && echo "Host github.com" >> .ssh/config \
-    && echo "\tStrictHostKeyChecking no" >> .ssh/config \
-    && git config --global user.email "autobot@opusvl.com" \
-    && git config --global user.name "Auto Commit Bot" \
-    && git clone git@github.com:OpusVL/perldoc.perl.org-engine.git 
+    && echo "\tStrictHostKeyChecking no" >> .ssh/config 
 
 # Add in a few missing deps
 RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
@@ -39,8 +36,9 @@ RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
     Perl::Tidy@20101217 
 
 COPY dumb-init_* /dumbinit
-
+COPY entrypoint.sh /
 RUN chmod +x /dumbinit 
+RUN chmod +x /entrypoint.sh
 
 # Kickstart the script into action
-ENTRYPOINT [ "/dumbinit", "--", "/root/perldoc.perl.org/docker/entrypoint.sh" ]
+ENTRYPOINT [ "/dumbinit", "--", "/entrypoint.sh" ]
