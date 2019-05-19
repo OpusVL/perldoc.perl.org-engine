@@ -19,8 +19,16 @@ RUN cd /root \
     && echo "Host github.com" >> .ssh/config \
     && echo "\tStrictHostKeyChecking no" >> .ssh/config 
 
+# Setup for using CPAN
+ENV PERL_MM_USE_DEFAULT=1
+
+# Install base libraries
+RUN cpan inc::latest LWP::Protocol::https App::cpanminus
+
 # Add in a few missing deps
-RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
+RUN cpanm Getopt::Long \
+    JSON \
+    JSON::MaybeXS \
     Data::Dumper \
     LWP::UserAgent \
     HTML::TreeBuilder \
@@ -33,7 +41,8 @@ RUN cd /opt/perl5/bin && ./cpanm Getopt::Long \
     Template \
     JSON::MaybeXS \
     Devel::PatchPerl@1.56 \
-    Perl::Tidy@20101217 
+    Perl::Tidy@20101217 \
+    File::Copy::Recursive
 
 COPY dumb-init_* /dumbinit
 COPY entrypoint.sh /
