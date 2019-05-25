@@ -49,13 +49,10 @@ sub main {
     # setup the perldoc base
     $global->{modules}->{extract_pod}->run();
     sync_state();
-    # Finalize the indexs
     $global->{modules}->{extract_pod}->make_index();
     sync_state();
-    # setup the perldoc base
     $global->{modules}->{extract_pod}->run();
     sync_state();
-    # Finalize the indexs
     $global->{modules}->{extract_pod}->make_index();
     sync_state();
 
@@ -119,6 +116,7 @@ sub run {
             my $logpath = "/tmp/$perl-pod.log";
             my ($output, $exit, @args);
 
+            warn "Swapping to: ".$env->{local_path};
             chdir $env->{local_path};
 
             print  "POD extracting for for: perl-$major.$minor\n";
@@ -151,7 +149,6 @@ sub make_index {
     my $env;
     my $ttenv = {};
     my $latest = { count => 0, major => 0, minor => 0 };
-    my $me = {};
 
     chdir $Bin;
 
@@ -183,6 +180,12 @@ sub make_index {
         }
     }
 
+    # Pass the highest versions to TT and remove any me records
+    $ttenv->{latest} = $latest;
+
+    # Create an ordered list to make it easier to manage in tt
+    $ttenv->{ordered_versions} = order_version(@versions);
+
     foreach my $version (@versions) {
         my $major = $version->[0];
         my $minor = $version->[1];
@@ -190,13 +193,9 @@ sub make_index {
         # For pretty
         print "INDEX($major,$minor): Generating\n";
 
-        # Add this to me TT and output index
-        $me->{major} = $major;
-        $me->{minor} = $minor;
-
         # Add MAJOR/MINOR for 'me' to TT....
-        $ttenv->{me} = $me;
-        $ttenv->{latest} = $latest;
+        $ttenv->{me}->{major} = $major;
+        $ttenv->{me}->{minor} = $minor;
 
         {
             my $output = "";
@@ -217,24 +216,13 @@ sub make_index {
             make_path($index_path);
             write_html($index_path."/404.html",$output);
         }
-
-        # Clear ME for the next pass
-        $me = {};
     }
-
 
     # Generate the main index = TODO HERE FUCKED
     if (!-e 'templates/main_index.tt') {
         warn "No main_index.tt found";
         die;
     }
-
-    # Pass the highest versions to TT and remove any me records
-    $ttenv->{latest} = $latest;
-    delete $ttenv->{me};
-
-    # Create an ordered list to make it easier to manage in tt
-    $ttenv->{ordered_versions} = order_version(@versions);
 
     # Lets create an index.html in the output dir
     my $output = "";
@@ -251,12 +239,13 @@ sub make_index {
 
     # Write the passed jsons out to passed.json
     my $json_path = join('/',$global->{config}->{'pod-dir'},'versions.json');
+    warn "Writing versions.json to: '$json_path'";
     open(my $fh,'>',$json_path);
     print $fh $global->{js}->encode($ttenv);
     close($fh);
 
     # Copy the required assets in too
-    dircopy('Asset/',$global->{config}->{'pod-dir'}) or die $!;
+    dircopy('Asset/public',$global->{config}->{'pod-dir'}) or die $!;
 }
 
 sub order_version {

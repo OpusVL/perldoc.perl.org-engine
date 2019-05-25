@@ -49,6 +49,7 @@ GetOptions( \%options, optionspec(%specifiers) );
   my $path = $options{'output_path'};
   $path = $path.'/../versions.json';
   if (-e $path) {
+    warn "JSON PATH OPENED: $path";
     open(my $fh,'<',$path);
     my $json = <$fh>;
     close($fh);
@@ -58,6 +59,7 @@ GetOptions( \%options, optionspec(%specifiers) );
       $new{$key} = $options{$key};
     }
     %options = %new;
+    warn Dumper(%options);
     if ($options{latest}{major} == 0) {
       $options{latest}{major} = 0+$options{major};
       $options{latest}{minor} = 0+$options{minor};
