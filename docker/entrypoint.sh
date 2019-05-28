@@ -8,10 +8,9 @@ cd /root
 git config --global user.email "autobot@opusvl.com" 
 git config --global user.name "Auto Commit Bot" 
 git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
-cp -Rvp engine/* perldoc.perl.org-engine/
+cp -Rp engine/* perldoc.perl.org-engine/
 
 cd perldoc.perl.org-engine
-ls
 mkdir -p work
 cd work
 echo "Removing output"
