@@ -1,23 +1,18 @@
-#!perl
-
-use FindBin qw/$Bin/;
-use lib "$Bin/lib";
-use constant TT_INCLUDE_PATH => "$Bin/templates";
+#! /usr/bin/perl
 
 use strict;
 use warnings;
-
 use Config;
 use Data::Dumper;
 use File::Basename;
 use File::Path;
 use File::Spec::Functions;
-
+use FindBin qw/$Bin/;
 use Getopt::Long;
 use Template;
 
+use lib "$Bin/lib";
 use Perldoc::Config;
-use JSON;
 
 
 use constant TRUE  => 1;
@@ -30,43 +25,20 @@ use vars qw/%core_modules/;
 
 #--Set options for Template::Toolkit---------------------------------------
 
+use constant TT_INCLUDE_PATH => "$Bin/templates";
 
 
 #--Set config options------------------------------------------------------
+
 my %specifiers = (
   'output-path' => '=s',
   'perl'        => '=s',
-  'version'     => '=s'
-);
+  'major'       => '=n',
+  'minor'       => '=n',
+);                  
 my %options;
 GetOptions( \%options, optionspec(%specifiers) );
-($options{major},$options{minor}) = $options{version} =~ m#^.*?5\.(\d+).(\d+)#;
 
-# Merge in the versions.json
-{
-  local $/;
-  my $path = $options{'output_path'};
-  $path = $path.'/../versions.json';
-  if (-e $path) {
-    warn "JSON PATH OPENED: $path";
-    open(my $fh,'<',$path);
-    my $json = <$fh>;
-    close($fh);
-    my $versions = decode_json($json);
-    my %new = %{$versions};
-    foreach my $key (keys %options) {
-      $new{$key} = $options{$key};
-    }
-    %options = %new;
-    warn Dumper(%options);
-    if ($options{latest}{major} == 0) {
-      $options{latest}{major} = 0+$options{major};
-      $options{latest}{minor} = 0+$options{minor};
-    }
-    $options{me}{major} = 0+$options{major};
-    $options{me}{minor} = 0+$options{minor};
-  }
-}
 
 #--Check mandatory options have been given---------------------------------
 
@@ -92,46 +64,20 @@ unless (-d $options{output_path}) {
 #--Check if we are using a different perl----------------------------------
 
 if ($options{perl}) {
-  # Generatea more correct paths
-  my $path_cmd    = 'print "$^X"';
-  my $path        = `$options{perl} -e '$path_cmd'`;
-
-  # Overwrite the one provided in options to absolute (if it was not already)
-  $options{perl} = $path;
-
   #warn "Setting perl to $options{perl}\n";
   my $version_cmd  = 'printf("%vd",$^V)';
   my $perl_version = `$options{perl} -e '$version_cmd'`;
   my $inc_cmd      = 'print "$_\n" foreach @INC';
   my $perl_inc     = `$options{perl} -e '$inc_cmd'`;
-
-  # Make nicer more absolute paths
-  my @path_split  = split(/\//,$path);
-  for(1..2) { pop @path_split }
-
-  # Collect all paths perl considers native
-  my $new_inc_cmd = 'foreach (@INC) { if ($_ =~ m#^\./(.*)#) { print "$1\n" } }';
-  my @new_inc     = split(/\n/,`$options{perl} -e '$new_inc_cmd'`);
-  push @new_inc,'lib';
-
-  # Reformat them to be absolute
-  my @includes    = ();
-  foreach (@new_inc) { push @includes,join('/',@path_split,$_) }
-  push @includes,"$Bin/lib";
-
-  print "Using include set(-I): ".join(',',@includes)."\n";
-
-  my @flagged_includes = ();
-  foreach (@includes) { push @flagged_includes,"-I$_" }
   my $bin_cmd      = 'use Config; print $Config{bin}';
-  my $perl_bin     = `$options{perl} @flagged_includes -e '$bin_cmd'`;
-
-  print "Using exec special: $options{perl} @flagged_includes -e '$bin_cmd'\n";
-
+  my $perl_bin     = `$options{perl} -e '$bin_cmd'`;
+  
   $Perldoc::Config::option{perl_version}  = $perl_version;
   $Perldoc::Config::option{perl5_version} = substr($perl_version,2);
-  $Perldoc::Config::option{inc}           = [@includes];
+  $Perldoc::Config::option{inc}           = [split /\n/,$perl_inc];
   $Perldoc::Config::option{bin}           = $perl_bin;
+  
+  #warn Dumper(\%Perldoc::Config::option);
 }
 
 eval <<EOT;
@@ -209,6 +155,7 @@ foreach my $section (Perldoc::Section::list()) {
   $index_data{content_tt}  = 'section_index.tt';
   $index_data{module_az}   = \@module_az_links;
   $index_data{options}     = \%options;
+  
   foreach my $page (Perldoc::Section::pages($section)) {
     (my $page_link = $page) =~ s/::/\//g;
     push @{$index_data{section_pages}},{name=>$page, link=>"$page_link.html",title=>Perldoc::Page::title($page)};
@@ -236,7 +183,6 @@ foreach my $section (Perldoc::Section::list()) {
     $page_data{pod_html}    = Perldoc::Page::Convert::html($page);
     $page_data{pod_html}    =~ s!<(pre class="verbatim")>(.+?)<(/pre)>!autolink($1,$2,$3,$page_data{path})!sge if ($page eq 'perl');
     $page_data{page_index}  = Perldoc::Page::Convert::index($page);
-    $page_data{options}     = \%options;
 
     my $filename  = catfile($Perldoc::Config::option{output_path},$page_data{pageaddress});    
     check_filepath($filename);
@@ -260,7 +206,6 @@ foreach my $module_index ('A'..'Z') {
   $page_data{breadcrumbs} = [ ];
   $page_data{content_tt}  = 'module_index.tt';
   $page_data{module_az}   = \@module_az_links;
-  $page_data{options}     = \%options;
   
   foreach my $module (grep {/^$module_index/ && exists($Perldoc::Page::CoreList{$_})} sort {uc $a cmp uc $b} Perldoc::Page::list()) {
     (my $module_link = $module) =~ s/::/\//g;
@@ -288,7 +233,6 @@ foreach my $module_index ('A'..'Z') {
     $module_data{module_az}   = \@module_az_links;
     $module_data{pod_html}    = Perldoc::Page::Convert::html($module);
     $module_data{page_index}  = Perldoc::Page::Convert::index($module);
-    $module_data{options}     = \%options;
                                 
     my $filename = catfile($Perldoc::Config::option{output_path},$module_data{pageaddress});
     check_filepath($filename);
@@ -328,7 +272,6 @@ $function_data{pagename}    = 'Perl functions A-Z';
 $function_data{breadcrumbs} = [ {name=>'Language reference', url=>'index-language.html'} ];
 $function_data{content_tt}  = 'function_index.tt';
 $function_data{module_az}   = \@module_az_links;
-$function_data{options}     = \%options;
 
 foreach my $letter ('A'..'Z') {
   my ($link,@functions);
