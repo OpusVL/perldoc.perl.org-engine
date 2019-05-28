@@ -19,8 +19,8 @@ rm -Rf output
 echo "Fetching latest output"
 git clone git@github.com:OpusVL/perldoc.perl.org-export.git output
 
-#while true
-#do
+while true
+do
     cd /root/perldoc.perl.org-engine
     perl sitegen.pl
     cd work/output
@@ -30,5 +30,5 @@ git clone git@github.com:OpusVL/perldoc.perl.org-export.git output
     git commit -am "AutoCommit"
     git push -f origin master
     echo "Sleeping for 24 hours before retrying";
-#    perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
-#done
+    perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
+done
