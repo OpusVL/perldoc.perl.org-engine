@@ -33,7 +33,6 @@ use vars qw/%core_modules/;
 
 
 #--Set config options------------------------------------------------------
-#my $json = JSON::MaybeXS->new();
 my %specifiers = (
   'output-path' => '=s',
   'perl'        => '=s',
@@ -237,6 +236,7 @@ foreach my $section (Perldoc::Section::list()) {
     $page_data{pod_html}    = Perldoc::Page::Convert::html($page);
     $page_data{pod_html}    =~ s!<(pre class="verbatim")>(.+?)<(/pre)>!autolink($1,$2,$3,$page_data{path})!sge if ($page eq 'perl');
     $page_data{page_index}  = Perldoc::Page::Convert::index($page);
+    $page_data{options}     = \%options;
 
     my $filename  = catfile($Perldoc::Config::option{output_path},$page_data{pageaddress});    
     check_filepath($filename);
@@ -260,6 +260,7 @@ foreach my $module_index ('A'..'Z') {
   $page_data{breadcrumbs} = [ ];
   $page_data{content_tt}  = 'module_index.tt';
   $page_data{module_az}   = \@module_az_links;
+  $page_data{options}     = \%options;
   
   foreach my $module (grep {/^$module_index/ && exists($Perldoc::Page::CoreList{$_})} sort {uc $a cmp uc $b} Perldoc::Page::list()) {
     (my $module_link = $module) =~ s/::/\//g;
@@ -287,6 +288,7 @@ foreach my $module_index ('A'..'Z') {
     $module_data{module_az}   = \@module_az_links;
     $module_data{pod_html}    = Perldoc::Page::Convert::html($module);
     $module_data{page_index}  = Perldoc::Page::Convert::index($module);
+    $module_data{options}     = \%options;
                                 
     my $filename = catfile($Perldoc::Config::option{output_path},$module_data{pageaddress});
     check_filepath($filename);
@@ -326,6 +328,7 @@ $function_data{pagename}    = 'Perl functions A-Z';
 $function_data{breadcrumbs} = [ {name=>'Language reference', url=>'index-language.html'} ];
 $function_data{content_tt}  = 'function_index.tt';
 $function_data{module_az}   = \@module_az_links;
+$function_data{options}     = \%options;
 
 foreach my $letter ('A'..'Z') {
   my ($link,@functions);
