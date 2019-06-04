@@ -8,6 +8,7 @@ cd /root
 git config --global user.email "autobot@opusvl.com" 
 git config --global user.name "Auto Commit Bot" 
 git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
+rm -Rf perldoc.perl.org-engine/
 cp -Rp engine/* perldoc.perl.org-engine/
 
 cd perldoc.perl.org-engine
