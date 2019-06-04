@@ -3,4 +3,4 @@ services:
   perldoc:
     image: quay.io/opusvl/perldoc:release
     volumes:
-      - "/tmp/work:/root/perldoc.perl.org/work"
+      - "$HOME/.tmp/perldoc/work:/root/perldoc.perl.org/work"
