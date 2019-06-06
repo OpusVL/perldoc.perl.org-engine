@@ -5,7 +5,7 @@ shopt -s expand_aliases
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
 cd /root
-git config --global user.email "autobot@opusvl.com" 
+git config --global user.email "support@opusvl.com" 
 git config --global user.name "Auto Commit Bot" 
 git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
 cp -Rvp engine/* perldoc.perl.org-engine/
