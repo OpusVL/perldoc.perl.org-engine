@@ -1,4 +1,4 @@
-@import 'bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 $ccc: #ccc;
 $green: #228b22;
@@ -21,7 +21,6 @@ html,
 body {
 	-webkit-overflow-scrolling: touch;
 	height: 100%;
-	
 }
 
 body {
