@@ -1,58 +1,36 @@
-# Perl Documentation Website
+## Modifying the site template
 
-This repo contains all the scrips that are necessary to develop the documentation website locally and then just deploy with a simple copy/paste to the server.
+There are 2 major files that can modified to change the structure of the generated html files:
 
-## gen-perldoc.pm
-
-A script to download perl versions, compile them and convert base perl pod files into html
-
-Using the scripts
-
-Running the script bellow will create the `builds` and `outputs` folders that contain each version of Perl released and its documentation.
-
-```bash
-perl gen-perldoc.pm
-```
-
-This script will run once per day so that if a new version is release this is downloaded, compiled and it's documentation released to the site automatically.
-
-To force recompiling the whole thing (in case of templates being updated) you can run
-
-```bash
-perl gen-perldoc.pm force
-```
-
-## Developing locally and modifying the templates
-
-### Template modifying
-
-There are 2 major files that can modified to change the structural integrity of the static html files.
-
-`***default.tt***` - template for the actual documentation pages
+`***default.tt***` - template for the documentation content pages
 
 - navigation automatically generated
 - links on the sidebar automatically generated
 - content automatically generated
-- footer automatically generated
+- footer links automatically generated
 
-`***main_index.tt***` main landing pages for each release
+`***main_index.tt***` main landing pages for releases
 
 - navigation automatically generated
 - landing page content links automatically generated
-- footer automatically generated
+- footer links automatically generated
 
-Modifying the templates while developing will require rebuilding the actual html files
+Once changed, the whole site will require a rebuild.
 
-Using `perl gen-perldoc.pm force` will rewrite the html files so please use it with caution as it will recreate all the html files inside the Outputs folder
+## Rebuilding the compiled HTML
 
-### Assets developing
+## Optimising JS assets
+
+If you want to optimise the js libraries, there are a few options:
+
+### Grunt
 
 Using Grunt to compile / optimize Sass, JS and Images
 
 This will install the required dependencies that will allow you to update / optimize / improve and remove code from the website
 
 ```bash
-npm install
+npm install // yarn
 ```
 
 There are a few tasks that have been created by default
@@ -60,13 +38,14 @@ There are a few tasks that have been created by default
 - image - optimize and copy images from the root into the outputs folder
 - sass - compile, optimize and export code into the outputs folder
 - uglify - compile, optimize, transpile and export code into the outputs folder
-  For development, open up a terminal and navigate to the current project
+
+For development, open up a terminal and navigate to the current project
 
 ```bash
 grunt watch
 ```
 
-this will watch all the souRce folders and recreate/ recompile files as needed
+this will watch all the source folders and recreate/ recompile files as needed
 
 ```bash
 grunt
@@ -74,9 +53,7 @@ grunt
 
 this command will run all tasks (sass, js, images) and compile the build into the outputs/public folder
 
-local simple http server
+### Perl JS optimisation tools
 
-```bash
-python -m SimpleHTTPServer 8000
-```
-
+[JS minify](https://metacpan.org/pod/JavaScript::Minifier)
+[CSS minify](https://metacpan.org/pod/CSS::Minifier)
