@@ -65,16 +65,16 @@
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-overview.html">Overview</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-tutorials.html">Tutorials</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-faq.html">FAQs</a>
-                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-history.html">History / Changes</a>
+                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-history.html">Changes</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-licence.html">License</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-language.html">Language</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-functions.html">Functions</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/perlop.html">Operators</a>
-                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/perlvar.html">Special Variables</a>
+                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/perlvar.html">Variables</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-pragmas.html">Pragmas</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-utilities.html">Utilities</a>
                   <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-internals.html">Internals</a>
-                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-platforms.html">Platform Specific</a>
+                  <a class="dropdown-item" href="/5.[% major %].[% minor %]/index-platforms.html">Platforms</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
