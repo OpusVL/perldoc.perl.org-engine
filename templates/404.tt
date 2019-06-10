@@ -129,7 +129,7 @@
 								<a
 									class="dropdown-item"
 									href="/5.[% major %].[% minor %]/index-history.html"
-									>History / Changes</a
+									>Changes</a
 								>
 								<a
 									class="dropdown-item"
@@ -154,7 +154,7 @@
 								<a
 									class="dropdown-item"
 									href="/5.[% major %].[% minor %]/perlvar.html"
-									>Special Variables</a
+									>Variables</a
 								>
 								<a
 									class="dropdown-item"
@@ -174,7 +174,7 @@
 								<a
 									class="dropdown-item"
 									href="/5.[% major %].[% minor %]/index-platforms.html"
-									>Platform Specific</a
+									>Platforms</a
 								>
 							</div>
 						</li>
@@ -346,7 +346,7 @@
 								class="highlight-module"
 							>
 								<div class="feature-image-wrap">
-									<h3 class="alternate">History / Changes</h3>
+									<h3 class="alternate">Changes</h3>
 									<object
 										data="/public/img/ic_highlight_box.svg"
 										type="image/svg+xml"
@@ -589,7 +589,7 @@
 			<div class="beta beta-blue  ">
 				<a
 					class="beta-link "
-					href="https://github.com/OpusVL/perldoc.perl.org/issues/new"
+					href="https://github.com/OpusVL/perldoc.perl.org-engine/issues/new"
 					rel="noopener"
 				>
 					<span class="beta-text">

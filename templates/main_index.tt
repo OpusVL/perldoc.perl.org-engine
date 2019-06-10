@@ -145,7 +145,7 @@
             <div class="col-md-6  col-lg-4 pb-5">
               <a href="/5.[% major %].[% minor %]/index-history.html" class="highlight-module">
                 <div class="feature-image-wrap">
-                  <h3 class="alternate">History / Changes</h3>
+                  <h3 class="alternate">Changes</h3>
                   <object data="/public/img/ic_highlight_box.svg" type="image/svg+xml" class="ic-highlight" name="highlight box image">highlight box image</object>
                 </div>
                 <p>Find out about the history of Perl and release notes (perldelta) for each version.</p>
