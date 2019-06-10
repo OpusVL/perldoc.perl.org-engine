@@ -231,7 +231,7 @@
     </footer>
     <div class="beta-wrapper beta-bottom-right ">
       <div class="beta beta-blue  ">
-        <a class="beta-link " href="https://github.com/OpusVL/perldoc.perl.org/issues/new" rel="noopener">
+        <a class="beta-link " href="https://github.com/OpusVL/perldoc.perl.org-engine/issues/new" rel="noopener">
           <span class="beta-text">
             This is a Beta release.
           </span>
