@@ -42,7 +42,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div id="navbar" class="collapse navbar-collapse justify-content-end">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="navbar-nav navbar-right">
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perl versions</a>
                 <div class="dropdown-menu" id="dropdown-menu-links" aria-labelledby="navbarDropdown">
@@ -157,16 +157,16 @@
                     <h4>Manual</h4>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-overview.html">Overview</a>
+                    <a href="/5.[% major %].[% minor%]/index-overview.html">Overview</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-tutorials.html">Tutorials</a>
+                    <a href="/5.[% major %].[% minor%]/index-tutorials.html">Tutorials</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-faq.html">FAQs</a>
+                    <a href="/5.[% major %].[% minor%]/index-faq.html">FAQs</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-history.html">Changes</a>
+                    <a href="/5.[% major %].[% minor%]/index-history.html">Changes</a>
                   </li>
                 </ul>
               </div>
@@ -176,16 +176,16 @@
                     <h4>Reference</h4>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-language.html">Language</a>
+                    <a href="/5.[% major %].[% minor%]/index-language.html">Language</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-functions.html">Functions</a>
+                    <a href="/5.[% major %].[% minor%]/index-functions.html">Functions</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/perlop.html">Operators</a>
+                    <a href="/5.[% major %].[% minor%]/perlop.html">Operators</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/perlvar.html">Variables</a>
+                    <a href="/5.[% major %].[% minor%]/perlvar.html">Variables</a>
                   </li>
                 </ul>
               </div>
@@ -195,13 +195,13 @@
                     <h4>Modules</h4>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-modules-A.html">Modules</a>
+                    <a href="/5.[% major %].[% minor%]/index-modules-A.html">Modules</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-pragmas.html">Pragmas</a>
+                    <a href="/5.[% major %].[% minor%]/index-pragmas.html">Pragmas</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-utilities.html">Utilities</a>
+                    <a href="/5.[% major %].[% minor%]/index-utilities.html">Utilities</a>
                   </li>
                 </ul>
               </div>
@@ -211,13 +211,13 @@
                     <h4>Misc</h4>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-licence.html">License</a>
+                    <a href="/5.[% major %].[% minor%]/index-licence.html">License</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-internals.html">Internals</a>
+                    <a href="/5.[% major %].[% minor%]/index-internals.html">Internals</a>
                   </li>
                   <li>
-                    <a href="/5/[% major %]/[% minor%]/index-platforms.html">Platforms</a>
+                    <a href="/5.[% major %].[% minor%]/index-platforms.html">Platforms</a>
                   </li>
                 </ul>
               </div>

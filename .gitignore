@@ -1,5 +1,5 @@
 node_modules/
-.sass-cache/*
+Asset/.sass-cache/*
 *package-lock.json
 config.codekit3
 builds/

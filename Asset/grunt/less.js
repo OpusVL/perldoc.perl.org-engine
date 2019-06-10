@@ -1,19 +1,17 @@
-module.exports = function () {
+module.exports = function() {
+	var less;
 
-  var less;
+	less = {
+		options: {
+			// compress : true,
+			sourceMap: false
+		},
+		style: {
+			files: {
+				'public/css/main.min.css': 'assets/less/main.less'
+			}
+		}
+	};
 
-  less = {
-    options: {
-      // compress : true,
-      sourceMap: false,
-    },
-    style: {
-      files: {
-        'outputs/public/css/main.min.css': 'assets/less/main.less'
-      }
-    },
-  };
-
-  return less;
-
+	return less;
 };

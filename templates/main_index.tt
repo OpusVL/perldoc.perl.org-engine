@@ -44,7 +44,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div id="navbar" class="collapse navbar-collapse justify-content-end">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="navbar-nav navbar-right">
             <li class="nav-item dropdown">
               <a id="navbarDropdown" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perl versions</a>
               <div class="dropdown-menu"  aria-labelledby="navbarDropdown">
