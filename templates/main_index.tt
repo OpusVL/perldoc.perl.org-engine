@@ -113,7 +113,7 @@
         <!--/.nav-collapse -->
       </nav>
       <div class="row jumbotron pl-5 pr-5">
-        <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 text-center">
+        <div class="col-sm-10 offset-sm-1 col-xl-6 offset-lg-3 text-center">
           <h1 class="h2">Welcome to Perldoc - the official</h1>
           <h2 class="h1">Perl 5.[% major %].[% minor %] documentation site</h2>
           <p>The content of this documentation site is built automatically - directly from the documentation created by the Perl developers.
@@ -131,7 +131,7 @@
         </div>
       </div>
       <main class="row main-content pb-5 pt-5">
-        <div class="col-sm-8 offset-sm-2">
+        <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-1">
           <div class="row">
             <div class="col-md-6 col-lg-4 pb-5">
               <a href="/5.[% major %].[% minor %]/index-overview.html" class="highlight-module">
@@ -194,7 +194,7 @@
       </main>
     </div>
     <footer class="footer row bg-light pt-5 pb-5">
-      <div class="col-sm-8 offset-sm-2">
+      <div class="col-sm-10 offset-sm-1 cl-xl-8 offset-xl-1">
         <div class="row">
           <div class="col-md-4">
             <ul class="list-unstyled">

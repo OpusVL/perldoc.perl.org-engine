@@ -308,7 +308,7 @@
 				<!--/.nav-collapse -->
 			</nav>
 			<div class="row jumbotron pl-5 pr-5">
-				<div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 text-center">
+				<div class="col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 text-center">
 					<h1 class="h1">Error getting the requested page</h1>
 					<p class='h4'>
 						There was an error trying to access the page you requested.
@@ -316,7 +316,7 @@
 				</div>
 			</div>
 			<main class="row main-content pb-5 pt-5">
-				<div class="col-sm-8 offset-sm-2">
+				<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-1">
 					<div class="row">
 						<div class="col-md-6 col-lg-4 pb-5">
 							<a
@@ -450,7 +450,7 @@
 			</main>
 		</div>
 		<footer class="footer row bg-light pt-5 pb-5">
-			<div class="col-sm-8 offset-sm-2">
+			<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-1">
 				<div class="row">
 					<div class="col-md-4">
 						<ul class="list-unstyled">
