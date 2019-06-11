@@ -191,6 +191,7 @@ sub view_item {
   if (defined $title) {
     $title = $title->present($self) if ref $title;
     $title =~ s/($strip)// if $strip;
+    # this could be causing the DD DT issue on compile ???
     if (defined $1) {
       my $dt = $1;
       if ($dt =~ /^\d+\.?/) {
