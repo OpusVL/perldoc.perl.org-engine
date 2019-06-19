@@ -191,14 +191,17 @@ sub view_item {
   if (defined $title) {
     $title = $title->present($self) if ref $title;
     $title =~ s/($strip)// if $strip;
+
+    # paul: Removed because deemed unnessary
     # this could be causing the DD DT issue on compile ???
-    if (defined $1) {
-      my $dt = $1;
-      if ($dt =~ /^\d+\.?/) {
-        $start_tag = "<dt>$dt</dt><dd>";
-        $end_tag   = "</dd>";
-      }
-    }
+    #if (defined $1) {
+    #  my $dt = $1;
+    #  if ($dt =~ /^\d+\.?/) {
+    #    $start_tag = "<dt>$dt</dt><dd>";
+    #    $end_tag   = "</dd>";
+    #  }
+    #}
+
     if (length $title) {
       my $anchor = escape($item->title->present('Pod::POM::View::Text'));
       $title = qq{<a id="$anchor"></a><strong>$title</strong>};
