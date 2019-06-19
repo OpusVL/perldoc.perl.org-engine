@@ -17,7 +17,7 @@ module.exports = function() {
 				'assets/scss/**/*.scss',
 				'assets/scss/**/**/*.scss'
 			],
-			tasks: ['sass']
+			tasks: ['sass', 'autoprefixer']
 		},
 		js: {
 			files: ['assets/js/**/*.js'],

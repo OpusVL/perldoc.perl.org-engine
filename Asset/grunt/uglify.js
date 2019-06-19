@@ -10,15 +10,11 @@ module.exports = function() {
 			report: 'min',
 			sourceMap: false,
 			preserveComments: false
-			//sourceMapIncludeSources: true,
 		},
 		main: {
 			src: [
-				// 'assets/js/libs/jquery.3.3.1.min.js',
-				'../node_modules/jquery/dist/jquery.min.js',
-				//latest Bootstrap JS file import updated
-				'../node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-				// 'assets/js/libs/bootstrap.bundle.js',
+				'assets/js/libs/jquery.3.4.1.js',
+				'assets/js/libs/bootstrap.bundle.js',
 				'assets/js/libs/highlight.pack.js',
 				'assets/js/main.js'
 			],

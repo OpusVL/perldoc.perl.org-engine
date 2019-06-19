@@ -198,7 +198,11 @@ object {
 			&:active,
 			&:visited,
 			&.active {
-				background-color: darken($color: $primary, $amount: 5%);
+				background-image: linear-gradient(
+					to bottom,
+					#0073a1 0,
+					lighten(#003555, 15%) 100%
+				);
 				color: rgba($color: white, $alpha: 1);
 			}
 		}
@@ -214,19 +218,16 @@ object {
 	}
 }
 
-.fixed-top {
-	position: absolute;
-	top: -1px;
-	transform: translate3d(0, 0, 0);
-}
-
 .bg-perl {
 	background-image: linear-gradient(to bottom, #0073a1 0, #003555 100%);
 	background-repeat: repeat-x;
 }
 
 .logo {
-	height: 60px;
+	height: 35px;
+	@include media-breakpoint-up(sm) {
+		height: 40px;
+	}
 }
 
 .jumbotron {

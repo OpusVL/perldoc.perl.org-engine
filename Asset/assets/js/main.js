@@ -149,7 +149,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				});
 			});
 		}
-	}, 250);
+	}, 350);
 });
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);

@@ -381,7 +381,7 @@
           </main>
         </div>
         <footer class="footer row bg-light pt-5 pb-5">
-          <div class="col-sm-10 offset-sm-1 cl-xl-8 offset-xl-2">
+          <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
             <div class="row">
               <div class="col-md-4">
                 <ul class="list-unstyled">
