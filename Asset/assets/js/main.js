@@ -94,6 +94,11 @@ if (!Array.prototype.forEach) {
 }
 function navHeight() {
 	var navHeight = document.querySelector('nav').offsetHeight;
+	if (navHeight > 75) {
+		document.querySelector('nav').classList.remove('navbar-expand');
+	} else {
+		document.querySelector('nav').classList.add('navbar-expand');
+	}
 	$('.wrapper').css({
 		'padding-top': navHeight + 'px'
 	});
@@ -153,3 +158,8 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);
+
+// create filter function automatically by each letter
+// if more then 2 char and only 1 result go the URL
+// if 1 char and direct match and enter go to the page
+// if more then 2 chat and multiple results, trigger dropdown and populate with li

@@ -190,6 +190,7 @@ object {
 
 .navbar-dark {
 	.navbar-nav {
+		flex-wrap: wrap;
 		.nav-link {
 			color: rgba($color: white, $alpha: 1);
 			padding: 1rem;
@@ -215,6 +216,43 @@ object {
 				max-height: 55vh;
 			}
 		}
+
+		.search-link {
+			position: absolute;
+			padding: 0.1rem 0.25rem;
+			right: 0;
+			background-color: darken(#fff, 5%);
+			border: 0 solid transparent;
+			&:hover,
+			&:active,
+			&.active {
+				border: 0 solid transparent;
+				background-image: none;
+				background-color: darken(#fff, 10%);
+			}
+		}
+	}
+}
+
+.search-wrapper {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: center;
+}
+.search-icon {
+	height: 15px;
+}
+.input-label {
+	align-self: center;
+	margin-bottom: 0;
+}
+
+#searchinput {
+	&:after {
+		content: '';
+		background-image: url(/public/img/search.svg) center center no-repeat;
+		right: 10px;
 	}
 }
 
