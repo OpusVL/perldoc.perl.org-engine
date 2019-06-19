@@ -27,11 +27,6 @@ use vars qw/$processing_state/;
 use vars qw/%manpage_pods/;
 use vars qw/%core_modules/;
 
-
-#--Set options for Template::Toolkit---------------------------------------
-
-
-
 #--Set config options------------------------------------------------------
 my %specifiers = (
   'output-path' => '=s',
@@ -58,7 +53,7 @@ GetOptions( \%options, optionspec(%specifiers) );
       $new{$key} = $options{$key};
     }
     %options = %new;
-    warn Dumper(%options);
+    #warn Dumper(%options);
     if ($options{latest}{major} == 0) {
       $options{latest}{major} = 0+$options{major};
       $options{latest}{minor} = 0+$options{minor};
@@ -67,6 +62,13 @@ GetOptions( \%options, optionspec(%specifiers) );
     $options{me}{minor} = 0+$options{minor};
   }
 }
+
+#--Search vars------------------------------------------------------------
+my $search        = [];
+my $search_uniq   = {};
+my $base_version  = join('.',5,$options{major},$options{minor});
+my $base_url      = "/$base_version/";
+my $search_path   = $options{'output_path'}."/search.json";
 
 #--Check mandatory options have been given---------------------------------
 
@@ -261,11 +263,20 @@ foreach my $module_index ('A'..'Z') {
   $page_data{content_tt}  = 'module_index.tt';
   $page_data{module_az}   = \@module_az_links;
   $page_data{options}     = \%options;
-  
+
   foreach my $module (grep {/^$module_index/ && exists($Perldoc::Page::CoreList{$_})} sort {uc $a cmp uc $b} Perldoc::Page::list()) {
     (my $module_link = $module) =~ s/::/\//g;
     $module_link .= '.html';
     push @{$page_data{module_links}}, {name=>$module, title=>Perldoc::Page::title($module), url=>$module_link};
+
+    if (!$search_uniq->{$module}) {
+      push @$search,{ 
+        name  =>  $module, 
+        url   =>  "$base_url$module_link" 
+      };
+      $search_uniq->{$module} = 1;
+    }
+
   }
   
   my $filename = catfile($Perldoc::Config::option{output_path},$page_data{pageaddress});
@@ -418,6 +429,10 @@ foreach my $function (Perldoc::Function::list()) {
   $function_template->process('default.tt',{%Perldoc::Config::option, %function_data},$filename) || die "Failed processing perlfunc\n".$function_template->error;
 }
 
+# END BLOCK DO FINAL processing
+open(my $fh,'>',$search_path);
+print $fh encode_json($search);
+close($fh);
 
 #--------------------------------------------------------------------------
 
