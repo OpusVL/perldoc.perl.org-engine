@@ -1,3 +1,7 @@
+# perldoc (engine)
+
+This is the source code and docker build scripts for creating the perldoc.perl.org static website, this repository is only in use for source control please visit https://github.com/OpusVL/perldoc.perl.org for any issues, feature requests or other suggestions
+
 ## Modifying the site template
 
 There are 2 major files that can modified to change the structure of the generated html files:
