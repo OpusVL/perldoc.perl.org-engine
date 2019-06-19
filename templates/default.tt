@@ -42,6 +42,7 @@
 
       <body class="body container-fluid ">
         <div class="wrapper">
+
           <nav
             class="navbar navbar-expand-md navbar-dark bg-primary bg-perl fixed-top justify-content-between">
             <a class="navbar-brand" href="/">
@@ -174,9 +175,9 @@
                       <a class="dropdown-item letters"
                         href="/5.[% major %].[% minor %]/index-modules-W.html">W</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-modules-Y.html">Y</a>
-                      <a class="dropdown-item letters"
                         href="/5.[% major %].[% minor %]/index-modules-X.html">X</a>
+                      <a class="dropdown-item letters"
+                        href="/5.[% major %].[% minor %]/index-modules-Y.html">Y</a>
                       <a class="dropdown-item letters"
                         href="/5.[% major %].[% minor %]/index-modules-Z.html">Z</a>
                     </div>
@@ -197,57 +198,57 @@
                     <div class="dropdown-divider"></div>
                     <div class="letter-container">
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-A.html">A</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#A">A</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-B.html">B</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#B">B</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-C.html">C</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#C">C</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-D.html">D</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#D">D</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-E.html">E</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#E">E</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-F.html">F</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#F">F</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-G.html">G</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#G">G</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-H.html">H</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#H">H</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-I.html">I</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#I">I</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-J.html">J</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#J">J</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-K.html">K</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#K">K</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-L.html">L</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#L">L</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-M.html">M</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#M">M</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-N.html">N</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#N">N</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-O.html">O</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#O">O</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-P.html">P</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#P">P</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-Q.html">Q</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#Q">Q</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-R.html">R</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#R">R</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-S.html">S</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#S">S</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-T.html">T</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#T">T</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-U.html">U</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#U">U</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-V.html">V</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#V">V</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-W.html">W</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#W">W</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-Y.html">Y</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#X">X</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-X.html">X</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#Y">Y</a>
                       <a class="dropdown-item letters"
-                        href="/5.[% major %].[% minor %]/index-functions-Z.html">Z</a>
+                        href="/5.[% major %].[% minor %]/index-functions.html#Z">Z</a>
                     </div>
                   </div>
                 </li>
@@ -255,6 +256,7 @@
             </div>
             <!--/.nav-collapse -->
           </nav>
+
           <main class="row main-content pb-5 pt-5">
             <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
               <div class="row">
