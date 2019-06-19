@@ -28,8 +28,12 @@ body {
 	flex-direction: column;
 }
 
-body::-webkit-scrollbar {
-	z-index: 1040;
+.main-content {
+	.col-xl-8 {
+		@include media-breakpoint-up(xl) {
+			max-width: 1000px;
+		}
+	}
 }
 
 .c {
@@ -334,7 +338,6 @@ object {
 	height: 25px;
 	padding-left: 0.5rem;
 }
-
 
 .list-unstyled {
 	list-style: none;

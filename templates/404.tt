@@ -45,270 +45,221 @@
 	</head>
 	<body class="body container-fluid ">
 		<div class="wrapper">
-			<nav
-				class="navbar navbar-expand-md navbar-dark bg-primary bg-perl fixed-top justify-content-between"
-			>
-				<a class="navbar-brand" href="/">
-					<object
-						class="logo"
-						data="/public/img/logo_perl_doc.svg"
-						type="image/svg+xml"
-						name="Perl Documentation Logo"
-					>
-						Perl Documentation Logo</object
-					>
-				</a>
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbar"
-					aria-controls="navbar"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div id="navbar" class="collapse navbar-collapse justify-content-end">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="nav-item dropdown">
-							<a
-								id="navbarDropdown"
-								href="#"
-								class="nav-link dropdown-toggle"
-								data-toggle="dropdown"
-								role="button"
-								aria-haspopup="true"
-								aria-expanded="false"
-								>Perl versions</a
-							>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								[% FOREACH option_version IN ordered_versions.index %]
-								<p class="dropdown-item major-version">
-									5.[% option_version %]
-								</p>
-								[% FOREACH option_minor IN ordered_versions.item(option_version)
-								%]
-								<a
-									class="dropdown-item minor-version"
-									href="/5.[% option_version %].[% option_minor %]"
-									>5.[% option_version %].[% option_minor %]</a
-								>
-								[% END %] [% UNLESS loop.last %]
-								<div class="dropdown-divider"></div>
-								[% END %] [% END %]
-							</div>
-						</li>
-						<li class="nav-item dropdown">
-							<a
-								id="navbarDropdown1"
-								href="#"
-								class="dropdown-toggle nav-link"
-								data-toggle="dropdown"
-								role="button"
-								aria-haspopup="true"
-								aria-expanded="false"
-								>Manuals</a
-							>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-overview.html"
-									>Overview</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-tutorials.html"
-									>Tutorials</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-faq.html"
-									>FAQs</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-history.html"
-									>Changes</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-licence.html"
-									>License</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-language.html"
-									>Language</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-functions.html"
-									>Functions</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/perlop.html"
-									>Operators</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/perlvar.html"
-									>Variables</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-pragmas.html"
-									>Pragmas</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-utilities.html"
-									>Utilities</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-internals.html"
-									>Internals</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-platforms.html"
-									>Platforms</a
-								>
-							</div>
-						</li>
-						<li class="nav-item dropdown">
-							<a
-								id="navbarDropdown3"
-								href="#"
-								class="nav-link dropdown-toggle "
-								data-toggle="dropdown"
-								role="button"
-								aria-haspopup="true"
-								aria-expanded="false"
-								>Modules</a
-							>
-							<div
-								aria-labelledby="navbarDropdown3"
-								class="dropdown-menu letters-wrap"
-							>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-functions.html"
-									>A-Z</a
-								>
-								<a
-									class="dropdown-item"
-									href="/5.[% major %].[% minor %]/index-functions-by-cat.html"
-									>By Category</a
-								>
-								<div class="dropdown-divider"></div>
-								<div class="letter-container">
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-A.html"
-										>A</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-B.html"
-										>B</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-C.html"
-										>C</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-D.html"
-										>D</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-E.html"
-										>E</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-F.html"
-										>F</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-G.html"
-										>G</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-H.html"
-										>H</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-I.html"
-										>I</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-J.html"
-										>J</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-L.html"
-										>L</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-M.html"
-										>M</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-N.html"
-										>N</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-O.html"
-										>O</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-P.html"
-										>P</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-S.html"
-										>S</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-T.html"
-										>T</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-U.html"
-										>U</a
-									>
-									<a
-										class="dropdown-item letters"
-										href="/5.[% major %].[% minor %]/index-modules-X.html"
-										>X</a
-									>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-			</nav>
+          <nav
+          	class="navbar navbar-expand-md navbar-dark bg-primary bg-perl fixed-top justify-content-between">
+          	<a class="navbar-brand" href="/">
+          		<object class="logo" data="/public/img/logo_perl_doc.svg"
+          			type="image/svg+xml" name="Perl Documentation Logo"> Perl
+          			Documentation Logo</object>
+          	</a>
+          	<button class="navbar-toggler" type="button" data-toggle="collapse"
+          		data-target="#navbar" aria-controls="navbar" aria-expanded="false"
+          		aria-label="Toggle navigation">
+          		<span class="navbar-toggler-icon"></span>
+          	</button>
+          	<div id="navbar"
+          		class="collapse navbar-collapse justify-content-end">
+          		<ul class="navbar-nav navbar-right">
+          			<li class="nav-item dropdown">
+          				<a id="navbarDropdown" href="#"
+          					class="nav-link dropdown-toggle" data-toggle="dropdown"
+          					role="button" aria-haspopup="true"
+          					aria-expanded="false">Perl versions</a>
+          				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          					[% FOREACH option_version IN ordered_versions.index %]
+          					<p class='dropdown-item major-version'>
+          						5.[% option_version %]
+          					</p>
+          					[% FOREACH option_minor IN
+          					ordered_versions.item(option_version) %]
+          					<a class='dropdown-item minor-version'
+          						href="/5.[% option_version %].[% option_minor %]">5.[%
+          						option_version %].[% option_minor %]</a>
+          					[% END %]
+          					[% UNLESS loop.last %]
+          					<div class="dropdown-divider"></div>
+          					[% END %]
+          					[% END %]
+          				</div>
+          			</li>
+          			<li class="nav-item dropdown">
+          				<a id="navbarDropdown1" href="#"
+          					class="dropdown-toggle nav-link" data-toggle="dropdown"
+          					role="button" aria-haspopup="true"
+          					aria-expanded="false">Manuals</a>
+          				<div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-overview.html">Overview</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-tutorials.html">Tutorials</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-faq.html">FAQs</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-history.html">Changes</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-licence.html">License</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-language.html">Language</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-functions.html">Functions</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/perlop.html">Operators</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/perlvar.html">Variables</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-pragmas.html">Pragmas</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-utilities.html">Utilities</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-internals.html">Internals</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-platforms.html">Platforms</a>
+          				</div>
+          			</li>
+          			<li class="nav-item dropdown">
+          				<a id="navbarDropdown3" href="#"
+          					class="nav-link dropdown-toggle " data-toggle="dropdown"
+          					role="button" aria-haspopup="true"
+          					aria-expanded="false">Modules</a>
+          				<div aria-labelledby="navbarDropdown3"
+          					class="dropdown-menu letters-wrap">
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-modules.html">A-Z</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-modules-by-cat.html">By
+          						Category</a>
+          					<div class="dropdown-divider"></div>
+          					<div class="letter-container">
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-A.html">A</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-B.html">B</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-C.html">C</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-D.html">D</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-E.html">E</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-F.html">F</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-G.html">G</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-H.html">H</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-I.html">I</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-J.html">J</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-K.html">K</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-L.html">L</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-M.html">M</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-N.html">N</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-O.html">O</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-P.html">P</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-Q.html">Q</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-R.html">R</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-S.html">S</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-T.html">T</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-U.html">U</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-V.html">V</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-W.html">W</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-Y.html">Y</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-X.html">X</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-modules-Z.html">Z</a>
+          					</div>
+          				</div>
+          			</li>
+          			<li class="nav-item dropdown">
+          				<a id="navbarDropdown4" href="#"
+          					class="nav-link dropdown-toggle " data-toggle="dropdown"
+          					role="button" aria-haspopup="true"
+          					aria-expanded="false">Functions</a>
+          				<div aria-labelledby="navbarDropdown4"
+          					class="dropdown-menu letters-wrap">
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-functions.html">A-Z</a>
+          					<a class="dropdown-item"
+          						href="/5.[% major %].[% minor %]/index-functions-by-cat.html">By
+          						Category</a>
+          					<div class="dropdown-divider"></div>
+          					<div class="letter-container">
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-A.html">A</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-B.html">B</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-C.html">C</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-D.html">D</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-E.html">E</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-F.html">F</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-G.html">G</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-H.html">H</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-I.html">I</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-J.html">J</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-K.html">K</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-L.html">L</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-M.html">M</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-N.html">N</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-O.html">O</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-P.html">P</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-Q.html">Q</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-R.html">R</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-S.html">S</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-T.html">T</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-U.html">U</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-V.html">V</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-W.html">W</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-Y.html">Y</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-X.html">X</a>
+          						<a class="dropdown-item letters"
+          							href="/5.[% major %].[% minor %]/index-functions-Z.html">Z</a>
+          					</div>
+          				</div>
+          			</li>
+          		</ul>
+          	</div>
+          	<!--/.nav-collapse -->
+          </nav>
 			<div class="row jumbotron pl-5 pr-5">
-				<div class="col-sm-10 offset-sm-1 col-lg-6 offset-lg-3 text-center">
+				<div class="col-sm-10 offset-sm-1 col-xl-6 offset-xl-3 text-center">
 					<h1 class="h1">Error getting the requested page</h1>
 					<p class='h4'>
 						There was an error trying to access the page you requested.
@@ -316,7 +267,7 @@
 				</div>
 			</div>
 			<main class="row main-content pb-5 pt-5">
-				<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-1">
+				<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
 					<div class="row">
 						<div class="col-md-6 col-lg-4 pb-5">
 							<a
@@ -450,7 +401,7 @@
 			</main>
 		</div>
 		<footer class="footer row bg-light pt-5 pb-5">
-			<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-1">
+			<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
 				<div class="row">
 					<div class="col-md-4">
 						<ul class="list-unstyled">

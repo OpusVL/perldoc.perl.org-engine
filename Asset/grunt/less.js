@@ -8,7 +8,7 @@ module.exports = function() {
 		},
 		style: {
 			files: {
-				'public/css/main.min.css': 'assets/less/main.less'
+				'../work/output/public/css/main.min.css': 'assets/less/main.less'
 			}
 		}
 	};
