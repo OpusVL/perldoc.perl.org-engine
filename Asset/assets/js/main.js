@@ -5,25 +5,43 @@ function navHeight() {
 		document.querySelector('nav').offsetHeight + 'px';
 }
 
+var currentURL;
 var searchFiltered;
 var userInput = document.getElementById('searchinput');
+var pathname = window.location.pathname;
+var menuItems;
+var latestVersions;
+var currVersion;
 
-function searchItems() {
-	fetch('/search.json')
-		.then(function(res) {
-			return res.json();
-		})
-		.then(function(data) {
-			searchFiltered = data.filter(function(el) {
-				return el.name.contains(userInput.value);
+// create filter function automatically by each letter
+// if more then 2 char and only 1 result go the URL
+// if 1 char and direct match and enter go to the page
+// if more then 2 chat and multiple results, trigger dropdown and populate with li
+
+var searchItems = function() {
+	var userMatched = searchFiltered.filter(function(el) {
+		if (el.name.toLowerCase() === userInput.value.toLowerCase().split('/')) {
+			return (window.location.href = el.url);
+		} else {
+			var matchArr =
+				el.name.toLowerCase().split('::') ||
+				el.name.toLowerCase().split('_') ||
+				el.name.toLowerCase().split(' ');
+			var userInputVal = userInput.value.toLowerCase().split('/');
+			var matchedWords = matchArr.filter(function(params) {
+				if (params === userInputVal) {
+					return el;
+				}
 			});
-		});
-	console.log(searchFiltered);
-}
+			console.log(userInputVal, matchArr, matchedWords);
+			return matchedWords;
+		}
+	});
+	return userMatched;
+};
 window.addEventListener('DOMContentLoaded', function() {
 	navHeight();
-	var menuItems;
-	var latestVersions;
+
 	var checkMenuItems = function() {
 		fetch('/versions.json')
 			.then(function(res) {
@@ -32,14 +50,23 @@ window.addEventListener('DOMContentLoaded', function() {
 			.then(function(data) {
 				menuItems = Object.assign({}, data.versions);
 				latestVersions = Object.assign({}, data.latest);
+				currVersion = Object.assign({}, data.me);
+			})
+			.then(function() {
+				currentURL = '/' + pathname.split('/')[1] + '/search.json';
+				fetch(currentURL)
+					.then(function(resp) {
+						return resp.json();
+					})
+					.then(function(jsonD) {
+						searchFiltered = jsonD;
+					});
 			});
 	};
 	checkMenuItems();
 
 	setTimeout(function() {
 		var allversions = document.getElementById('dropdown-menu-links');
-
-		// create array of major versions
 		var menuItemsArray = Object.keys(menuItems).map(function(key) {
 			return [
 				Number(key),
@@ -73,9 +100,11 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);
-userInput.addEventListener('input', searchItems);
+// userInput.addEventListener('input', searchItems);
 
-// create filter function automatically by each letter
-// if more then 2 char and only 1 result go the URL
-// if 1 char and direct match and enter go to the page
-// if more then 2 chat and multiple results, trigger dropdown and populate with li
+document
+	.querySelector('.search-wrapper')
+	.addEventListener('submit', function(ev) {
+		ev.preventDefault();
+		searchItems();
+	});

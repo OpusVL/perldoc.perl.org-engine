@@ -13,23 +13,23 @@
           	<div id="navbar"
           		class="collapse navbar-collapse justify-content-end">
           		<ul class="navbar-nav navbar-right">
-          			<li class="nav-item dropdown search-wrapper">
+          			<form class="nav-item dropdown search-wrapper">
           				<input type="text" id='searchinput'
           					aria-describedby='navbarDropdown5' placeholder="Type query"
           					class='search-input-field' value=''>
 
-          				<a href="#" data-toggle='dropdown' role="button"
+          				<button href="#" data-toggle='dropdown' type="button"
           					aria-haspopup="true" aria-expanded='false'
           					id="navbarDropdown5"
           					class="nav-link dropdown-toggle search-link">
           					<object class='search-icon' data="/public/img/search.svg"
           						type="image/svg+xml" name='search icon'>search
           						icon</object>
-          				</a>
+          				</button>
           				<div class="dropdown-menu" aria-labelledby="navbarDropdown5"
           					id='search-results'>
           				</div>
-          			</li>
+          			</form>
           			<li class="nav-item dropdown">
           				<a id="navbarDropdown" href="#"
           					class="nav-link dropdown-toggle" data-toggle="dropdown"
