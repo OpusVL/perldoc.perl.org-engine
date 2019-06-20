@@ -94,11 +94,16 @@ if (!Array.prototype.forEach) {
 }
 function navHeight() {
 	var navHeight = document.querySelector('nav').offsetHeight;
-	if (navHeight > 75) {
-		document.querySelector('nav').classList.remove('navbar-expand');
-	} else {
-		document.querySelector('nav').classList.add('navbar-expand');
-	}
+
+	// if (
+	// 	window.innerWidth >
+	// 	document.querySelector('ul.navbar-nav').offsetWidth +
+	// 		document.querySelector('a.navbar-brand').offsetWidth
+	// ) {
+	// 	document.querySelector('nav').classList.add('navbar-expand');
+	// } else {
+	// 	document.querySelector('nav').classList.remove('navbar-expand');
+	// }
 	$('.wrapper').css({
 		'padding-top': navHeight + 'px'
 	});
@@ -108,7 +113,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	var menuItems;
 	var latestVersions;
-	var checkMenuItems = function checkMenuItems() {
+	function checkMenuItems() {
 		fetch('/versions.json')
 			.then(function(res) {
 				return res.json();
@@ -117,8 +122,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				menuItems = Object.assign({}, data.versions);
 				latestVersions = Object.assign({}, data.latest);
 			});
-	};
-
+	}
 	checkMenuItems();
 
 	setTimeout(function() {

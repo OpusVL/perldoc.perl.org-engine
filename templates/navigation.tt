@@ -1,5 +1,5 @@
           <nav
-          	class="navbar navbar-dark bg-primary bg-perl fixed-top justify-content-between">
+          	class="navbar navbar-dark bg-primary bg-perl fixed-top justify-content-between navbar-expand-lg">
           	<a class="navbar-brand" href="/">
           		<object class="logo" data="/public/img/logo_perl_doc.svg"
           			type="image/svg+xml" name="Perl Documentation Logo"> Perl
@@ -14,23 +14,18 @@
           		class="collapse navbar-collapse justify-content-end">
           		<ul class="navbar-nav navbar-right">
           			<li class="nav-item dropdown search-wrapper">
-          				<div class="input-group">
-          					<label class='input-label'>
-          						<input type="text" id='searchinput'
-          							placeholder="Type query" class='search-input-field'>
-          					</label>
-          					<div class="input-group-btn">
-          						<a href="#" data-toggle='dropdown' role="button"
-          							aria-haspopup="true" aria-expanded='false'
-          							id="navbarDropdown5"
-          							class="nav-link dropdown search-link">
-          							<object class='search-icon'
-          								data="/public/img/search.svg" type="image/svg+xml"
-          								name='search icon'>search
-          								icon</object>
-          						</a>
-          					</div>
-          				</div>
+          				<input type="text" id='searchinput'
+          					aria-describedby='navbarDropdown5' placeholder="Type query"
+          					class='search-input-field'>
+
+          				<a href="#" data-toggle='dropdown' role="button"
+          					aria-haspopup="true" aria-expanded='false'
+          					id="navbarDropdown5"
+          					class="nav-link dropdown-toggle search-link">
+          					<object class='search-icon' data="/public/img/search.svg"
+          						type="image/svg+xml" name='search icon'>search
+          						icon</object>
+          				</a>
           				<div class="dropdown-menu" aria-labelledby="navbarDropdown5"
           					id='search-results'>
           				</div>
