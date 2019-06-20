@@ -16,7 +16,7 @@
           			<li class="nav-item dropdown search-wrapper">
           				<input type="text" id='searchinput'
           					aria-describedby='navbarDropdown5' placeholder="Type query"
-          					class='search-input-field'>
+          					class='search-input-field' value=''>
 
           				<a href="#" data-toggle='dropdown' role="button"
           					aria-haspopup="true" aria-expanded='false'

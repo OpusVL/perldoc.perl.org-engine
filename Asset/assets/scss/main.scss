@@ -193,7 +193,7 @@ object {
 		flex-wrap: nowrap;
 		.nav-link {
 			color: rgba($color: white, $alpha: 1);
-			padding: 1rem;
+			padding: 0.75rem 0.5rem;
 
 			&:hover,
 			&:active,
@@ -231,13 +231,16 @@ object {
 		}
 	}
 	.navbar-expand {
-		.search-wrapper {
-			padding-left: 0;
-		}
 		.search-link {
 			padding: 0.15rem 0.35rem;
 		}
+		.search-input-field {
+			margin-left: 0;
+		}
 	}
+}
+.search-input-field {
+	margin-left: 0.5rem;
 }
 
 .search-wrapper {
@@ -246,7 +249,6 @@ object {
 	align-items: center;
 	justify-content: flex-start;
 	width: fit-content;
-	padding-left: 1rem;
 	&.show {
 		flex-wrap: wrap;
 		.dropdown-menu.show {
@@ -257,10 +259,6 @@ object {
 .search-icon {
 	height: 15px;
 	width: 15px;
-}
-.input-label {
-	align-self: center;
-	margin-bottom: 0;
 }
 
 #searchinput {
