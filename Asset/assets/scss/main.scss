@@ -5,6 +5,7 @@ $green: #228b22;
 $black: #000;
 $lightred: #cd5555;
 $lightblue: #00688b;
+$darkblue: lighten(#003555, 15%);
 $purple: #8b008b;
 $brightred: #f00;
 $lightpurple: #b452cd;
@@ -16,6 +17,10 @@ $darkbrown: #262626;
 $lightnumberbg: #d8d8d8;
 $darkergray: #3f3f3f;
 $darkestgray: #212529;
+$primary: $darkblue;
+a {
+	color: $darkblue;
+}
 
 html,
 body {
@@ -220,7 +225,7 @@ object {
 		.dropdown-item {
 			&:hover,
 			&:focus {
-				background-color: #125d85;
+				background-color: $darkblue;
 				color: $white;
 			}
 		}
@@ -292,7 +297,7 @@ object {
 .jumbotron {
 	h2,
 	h1 {
-		color: $lightblue;
+		color: $darkblue;
 	}
 	img {
 		@include media-breakpoint-up(xs) {
@@ -337,7 +342,7 @@ object {
 
 .dropdown-menu {
 	.dropdown-item {
-		color: $blue;
+		color: $darkblue;
 
 		&:hover,
 		&:active,
@@ -420,14 +425,14 @@ $box-shadow: #888888;
 	position: fixed;
 	width: 50px;
 	height: 50px;
-	top: 0;
-	right: 0;
+	// top: 0;
+	// right: 0;
 	z-index: 9999;
 }
 
 .beta {
-	position: absolute;
-	top: 5px;
+	position: fixed;
+	// top: 5px;
 	width: 50px;
 	height: 50px;
 	background-color: $dark-brown;
@@ -446,13 +451,13 @@ $box-shadow: #888888;
 	font-weight: normal;
 }
 
-.beta-left {
-	left: 5px;
-}
+// .beta-left {
+// 	left: 5px;
+// }
 
-.beta-right {
-	right: 5px;
-}
+// .beta-right {
+// 	right: 5px;
+// }
 
 .beta-bottom-right {
 	top: auto;
@@ -460,12 +465,12 @@ $box-shadow: #888888;
 	right: 5px;
 }
 
-.beta-bottom-left {
-	top: auto;
-	bottom: 10px;
-	right: auto;
-	left: 5px;
-}
+// .beta-bottom-left {
+// 	top: auto;
+// 	bottom: 10px;
+// 	right: auto;
+// 	left: 5px;
+// }
 
 .beta-link,
 .beta-link:link,
@@ -493,17 +498,17 @@ $box-shadow: #888888;
 		height: 150px;
 	}
 
-	.beta-left {
-		left: 5px;
-		transform: rotate(-45deg);
-		transform-origin: bottom right;
-	}
+	// .beta-left {
+	// 	left: 5px;
+	// 	transform: rotate(-45deg);
+	// 	transform-origin: bottom right;
+	// }
 
-	.beta-right {
-		transform: rotate(45deg);
-		top: -55px;
-		transform-origin: top left;
-	}
+	// .beta-right {
+	// 	transform: rotate(45deg);
+	// 	top: -55px;
+	// 	transform-origin: top left;
+	// }
 
 	.beta-bottom-right {
 		transform: rotate(-45deg);
@@ -512,16 +517,16 @@ $box-shadow: #888888;
 		transform-origin: bottom left;
 	}
 
-	.beta-bottom-left {
-		transform: rotate(45deg);
-		left: -150px;
-		bottom: -5px;
-		transform-origin: bottom right;
-	}
+	// .beta-bottom-left {
+	// 	transform: rotate(45deg);
+	// 	left: -150px;
+	// 	bottom: -5px;
+	// 	transform-origin: bottom right;
+	// }
 
 	.beta {
-		top: 0;
-		left: auto;
+		// top: 0;
+		// left: auto;
 		right: -155px;
 		width: auto;
 		height: auto;
@@ -532,7 +537,7 @@ $box-shadow: #888888;
 	}
 
 	.beta-blue {
-		background-color: $blue;
+		background-color: $darkblue;
 	}
 
 	.beta-text {

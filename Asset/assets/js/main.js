@@ -49,9 +49,7 @@ var searchItems = function() {
 		matcheAnswerElement.href = element.url;
 		matcheAnswerElement.innerHTML = element.name.replace(/::/gi, ' ');
 		searchResults.appendChild(matcheAnswerElement);
-		searchResults.classList.add('show');
-		searchResults.parentNode.classList.add('show');
-		searchResults.childNodes[0].focus();
+
 		// }
 	});
 };
@@ -123,4 +121,22 @@ document
 	.addEventListener('submit', function(ev) {
 		ev.preventDefault();
 		searchItems();
+		searchResults.classList.add('show');
+		searchResults.parentNode.classList.add('show');
+		searchResults.childNodes[0].focus();
+	});
+document
+	.getElementById('navbarDropdown5')
+	.addEventListener('click', function() {
+		searchItems();
+		// setTimeout(function() {
+		if (searchResults.classList.contains('show')) {
+			searchResults.classList.add('show');
+			searchResults.parentNode.classList.add('show');
+		} else {
+			searchResults.classList.remove('show');
+			searchResults.parentNode.classList.remove('show');
+			searchResults.childNodes[0].focus();
+		}
+		// }, 150);
 	});
