@@ -8,7 +8,7 @@ module.exports = function() {
 		},
 		dist: {
 			files: {
-				'../work/output/public/js/main.min.js': [
+				'public/js/main.min.js': [
 					'assets/js/libs/jquery.3.4.1.js',
 					'assets/js/libs/bootstrap.bundle.js',
 					'assets/js/libs/highlight.pack.js',

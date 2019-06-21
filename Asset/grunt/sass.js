@@ -8,7 +8,7 @@ module.exports = function() {
 		},
 		style: {
 			files: {
-				'../work/output/public/css/main.min.css': 'assets/scss/main.scss'
+				'public/css/main.min.css': 'assets/scss/main.scss'
 			}
 		}
 	};

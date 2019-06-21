@@ -34,7 +34,7 @@ module.exports = function() {
 					expand: true,
 					cwd: 'assets/img/',
 					src: ['**/*.{png,ico,jpg,svg,gif}'],
-					dest: '../work/output/public/img/'
+					dest: 'public/img/'
 				}
 			]
 		}
