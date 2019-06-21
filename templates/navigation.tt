@@ -27,6 +27,9 @@
           				</button>
           				<div class="dropdown-menu" aria-labelledby="navbarDropdown5"
           					id='search-results'>
+          					<p class='dropdown-item major-version'>
+          						No results
+          					</p>
           				</div>
           			</form>
           			<li class="nav-item dropdown">

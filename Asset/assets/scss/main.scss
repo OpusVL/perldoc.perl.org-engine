@@ -274,13 +274,13 @@ object {
 	width: 15px;
 }
 
-#searchinput {
-	&:after {
-		content: '';
-		background-image: url(/public/img/search.svg) center center no-repeat;
-		right: 10px;
-	}
-}
+// #searchinput {
+// 	&:after {
+// 		content: '';
+// 		// background-image: url(/public/img/search.svg) center center no-repeat;
+// 		right: 10px;
+// 	}
+// }
 
 .bg-perl {
 	background-image: linear-gradient(to bottom, #0073a1 0, #003555 100%);
