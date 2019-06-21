@@ -13,14 +13,15 @@ var menuItems;
 var latestVersions;
 var currVersion;
 var searchResults = document.getElementById('search-results');
-
+var matchArr;
+var userInputVal;
 var searchItems = function() {
 	searchResults.innerHTML = '';
 	var userMatched = searchFiltered.filter(function(el) {
 		var names = el.name.replace(/::/gi, ' ');
 		names = names.replace('_', ' ');
-		var matchArr = names.toLowerCase().split(' ');
-		var userInputVal = userInput.value
+		matchArr = names.toLowerCase().split(' ');
+		userInputVal = userInput.value
 			.trim()
 			.toLowerCase()
 			.split(' ');
@@ -34,6 +35,9 @@ var searchItems = function() {
 		return (window.location.href = userMatched[0].url);
 	}
 	userMatched.forEach(function(element) {
+		if (userInputVal.join(' ') === matchArr.join(' ')) {
+			return (window.location.href = el.url);
+		}
 		var matcheAnswerElement = document.createElement('a');
 		matcheAnswerElement.className = 'dropdown-item';
 		matcheAnswerElement.href = element.url;
@@ -41,6 +45,7 @@ var searchItems = function() {
 		searchResults.appendChild(matcheAnswerElement);
 		searchResults.classList.add('show');
 		searchResults.parentNode.classList.add('show');
+		searchResults.childNodes[0].focus();
 	});
 };
 window.addEventListener('DOMContentLoaded', function() {

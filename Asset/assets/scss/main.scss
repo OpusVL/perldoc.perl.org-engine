@@ -217,6 +217,14 @@ object {
 			}
 		}
 
+		.dropdown-item {
+			&:hover,
+			&:focus {
+				background-color: #125d85;
+				color: $white;
+			}
+		}
+
 		.search-link {
 			padding: 0.175rem 0.35rem;
 			background-color: darken(#fff, 5%);
