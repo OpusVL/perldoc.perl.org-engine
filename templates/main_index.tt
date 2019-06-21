@@ -45,7 +45,7 @@
 
         <div class="wrapper">
 
-          [% INCLUDE navigation.tt %]
+          [% PROCESS navigation.tt %]
 
           <div class="row jumbotron pl-5 pr-5">
             <div class="col-sm-10 offset-sm-1 col-xl-6 offset-xl-3 text-center">
@@ -171,8 +171,8 @@
           </main>
         </div>
 
-        [% INCLUDE footer.tt %]
-        [% INCLUDE beta.tt %]
+        [% PROCESS footer.tt %]
+        [% PROCESS beta.tt %]
 
         <script src="/public/js/main.min.js"></script>
       </body>
