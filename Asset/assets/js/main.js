@@ -12,32 +12,36 @@ var pathname = window.location.pathname;
 var menuItems;
 var latestVersions;
 var currVersion;
-
-// create filter function automatically by each letter
-// if more then 2 char and only 1 result go the URL
-// if 1 char and direct match and enter go to the page
-// if more then 2 chat and multiple results, trigger dropdown and populate with li
+var searchResults = document.getElementById('search-results');
 
 var searchItems = function() {
+	searchResults.innerHTML = '';
 	var userMatched = searchFiltered.filter(function(el) {
-		if (el.name.toLowerCase() === userInput.value.toLowerCase().split('/')) {
-			return (window.location.href = el.url);
-		} else {
-			var matchArr =
-				el.name.toLowerCase().split('::') ||
-				el.name.toLowerCase().split('_') ||
-				el.name.toLowerCase().split(' ');
-			var userInputVal = userInput.value.toLowerCase().split('/');
-			var matchedWords = matchArr.filter(function(params) {
-				if (params === userInputVal) {
-					return el;
-				}
-			});
-			console.log(userInputVal, matchArr, matchedWords);
-			return matchedWords;
-		}
+		var names = el.name.replace(/::/gi, ' ');
+		names = names.replace('_', ' ');
+		var matchArr = names.toLowerCase().split(' ');
+		var userInputVal = userInput.value
+			.trim()
+			.toLowerCase()
+			.split(' ');
+		var intersection = userInputVal.filter(function(ele) {
+			return matchArr.indexOf(ele) > -1;
+		});
+		return intersection.length != 0;
 	});
-	return userMatched;
+	console.log(userMatched);
+	if (userMatched.length === 1) {
+		return (window.location.href = userMatched[0].url);
+	}
+	userMatched.forEach(function(element) {
+		var matcheAnswerElement = document.createElement('a');
+		matcheAnswerElement.className = 'dropdown-item';
+		matcheAnswerElement.href = element.url;
+		matcheAnswerElement.innerHTML = element.name.replace(/::/gi, ' ');
+		searchResults.appendChild(matcheAnswerElement);
+		searchResults.classList.add('show');
+		searchResults.parentNode.classList.add('show');
+	});
 };
 window.addEventListener('DOMContentLoaded', function() {
 	navHeight();
