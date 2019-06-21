@@ -35,9 +35,15 @@ var searchItems = function() {
 		return (window.location.href = userMatched[0].url);
 	}
 	userMatched.forEach(function(element) {
-		if (userInputVal.join(' ') === matchArr.join(' ')) {
-			return (window.location.href = el.url);
-		}
+		// if there is an exact matching result but multiple possiblities, just go to the match ???
+		// not sure this is what search is supposed to be about
+		// console.log(userInputVal.join(' '), matchArr.join(' '));
+		// var elementName = element.name.replace(/::/gi, ' ');
+		// elementName = elementName.replace('_', ' ');
+		// elementName = elementName.toLowerCase().split(' ');
+		// if (userInputVal.join(' ') === elementName.join(' ')) {
+		// 	return (window.location.href = element.url);
+		// } else {
 		var matcheAnswerElement = document.createElement('a');
 		matcheAnswerElement.className = 'dropdown-item';
 		matcheAnswerElement.href = element.url;
@@ -46,6 +52,7 @@ var searchItems = function() {
 		searchResults.classList.add('show');
 		searchResults.parentNode.classList.add('show');
 		searchResults.childNodes[0].focus();
+		// }
 	});
 };
 window.addEventListener('DOMContentLoaded', function() {
