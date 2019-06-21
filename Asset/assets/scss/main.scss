@@ -229,17 +229,20 @@ object {
 				color: $white;
 			}
 		}
-
+		.search-input-field,
 		.search-link {
 			padding: 0.175rem 0.35rem;
-			background-color: darken(#fff, 5%);
-			border: 0 solid transparent;
+			background-color: darken($white, 5%);
+			border: 2px solid transparent;
 			&:hover,
 			&:active,
 			&.active {
-				border: 0 solid transparent;
+				border: 2px solid transparent;
 				background-image: none;
-				background-color: darken(#fff, 10%);
+				background-color: darken($white, 10%);
+			}
+			&:focus {
+				outline-offset: -2px;
 			}
 		}
 	}
