@@ -75,42 +75,41 @@ window.addEventListener('DOMContentLoaded', function() {
 					.then(function(jsonD) {
 						searchFiltered = jsonD;
 					});
+				var allversions = document.getElementById('dropdown-menu-links');
+				var menuItemsArray = Object.keys(menuItems).map(function(key) {
+					return [
+						Number(key),
+						Object.keys(menuItems[key]).map(function(lastKey) {
+							return Number(lastKey);
+						})
+					];
+				});
+				menuItemsArray = menuItemsArray.sort().reverse();
+
+				if (allversions) {
+					menuItemsArray.forEach(function(el, index) {
+						var majorVersion = document.createElement('p');
+						majorVersion.classList.add('dropdown-item', 'major-version');
+						var dividerDiv = document.createElement('div');
+						dividerDiv.classList.add('dropdown-divider');
+						majorVersion.innerHTML = el[0];
+						allversions.appendChild(majorVersion);
+
+						el[1].forEach(function(minorEl) {
+							var minorVersion = document.createElement('a');
+							minorVersion.classList.add('dropdown-item', 'minor-version');
+							minorVersion.innerHTML = '5.' + el[0] + '.' + minorEl;
+							minorVersion.setAttribute('href', '/5.' + el[0] + '.' + minorEl);
+							allversions.appendChild(minorVersion);
+							allversions.appendChild(dividerDiv);
+						});
+					});
+				}
 			});
 	};
 	checkMenuItems();
 
-	setTimeout(function() {
-		var allversions = document.getElementById('dropdown-menu-links');
-		var menuItemsArray = Object.keys(menuItems).map(function(key) {
-			return [
-				Number(key),
-				Object.keys(menuItems[key]).map(function(lastKey) {
-					return Number(lastKey);
-				})
-			];
-		});
-		menuItemsArray = menuItemsArray.sort().reverse();
-
-		if (allversions) {
-			menuItemsArray.forEach(function(el, index) {
-				var majorVersion = document.createElement('p');
-				majorVersion.classList.add('dropdown-item', 'major-version');
-				var dividerDiv = document.createElement('div');
-				dividerDiv.classList.add('dropdown-divider');
-				majorVersion.innerHTML = el[0];
-				allversions.appendChild(majorVersion);
-
-				el[1].forEach(function(minorEl) {
-					var minorVersion = document.createElement('a');
-					minorVersion.classList.add('dropdown-item', 'minor-version');
-					minorVersion.innerHTML = '5.' + el[0] + '.' + minorEl;
-					minorVersion.setAttribute('href', '/5.' + el[0] + '.' + minorEl);
-					allversions.appendChild(minorVersion);
-					allversions.appendChild(dividerDiv);
-				});
-			});
-		}
-	}, 350);
+	// setTimeout(function() {}, 350);
 });
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);

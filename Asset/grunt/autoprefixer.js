@@ -7,8 +7,8 @@ module.exports = function() {
 			browsers: ['last 4 version']
 		},
 		single_file: {
-			src: '../work/output/public/css/main.min.css',
-			dest: '../work/output/public/css/main.min.css'
+			src: 'public/css/main.min.css',
+			dest: 'public/css/main.min.css'
 		}
 	};
 
