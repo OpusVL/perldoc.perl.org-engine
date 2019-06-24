@@ -1,9 +1,8 @@
-<a class="skippy sr-only sr-only-focusable" href="#content">
-	<span class="skippy-text">Skip to main content</span>
-</a>
-
 <nav
 	class="navbar navbar-dark bg-primary bg-perl fixed-top justify-content-between navbar-expand-lg">
+	<a href="#content" class="skippy sr-only sr-only-focusable">
+		<span class=' skippy-text'>Skip to main content</span>
+	</a>
 	<a class="navbar-brand" href="/">
 		<img class="logo" src="/public/img/logo_perl_doc.svg"
 			alt="Perl Documentation Logo" />

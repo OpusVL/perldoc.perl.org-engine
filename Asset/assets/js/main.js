@@ -113,8 +113,21 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);
-// userInput.addEventListener('input', searchItems);
 
+var letters = Array.from(document.querySelectorAll('.letters'));
+letters.forEach(function(element) {
+	element.addEventListener('click', function(item) {
+		document.querySelector('.dropdown-menu.show').classList.remove('show');
+		document.querySelector('.dropdown.show').classList.remove('.show');
+		document.querySelector('.navbar-collapse.show').classList.remove('show');
+		document
+			.querySelector('.navbar-toggler')
+			.setAttribute('aria-expanded', 'false');
+	});
+});
+window.addEventListener('hashchange', function() {
+	window.scrollTo(window.scrollX, window.scrollY - 80);
+});
 document
 	.querySelector('.search-wrapper')
 	.addEventListener('submit', function(ev) {
