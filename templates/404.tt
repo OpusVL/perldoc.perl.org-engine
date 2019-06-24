@@ -47,7 +47,7 @@
 
       		[% PROCESS navigation.tt %]
 
-      		<div class="row jumbotron pl-5 pr-5">
+      		<div class="row jumbotron pl-5 pr-5" id='content'>
       			<div class="col-sm-10 offset-sm-1 col-xl-6 offset-xl-3 text-center">
       				<h1 class="h1">Error getting the requested page</h1>
       				<p class='h4'>

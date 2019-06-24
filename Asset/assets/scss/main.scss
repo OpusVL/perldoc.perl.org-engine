@@ -548,3 +548,17 @@ $box-shadow: #888888;
 		width: 100%;
 	}
 }
+
+.skippy {
+	display: block;
+	padding: 1em;
+	color: #fff;
+	text-align: center;
+	background-color: transparent;
+	outline: 0;
+}
+* {
+	&:focus {
+		border: 5px solid red !important;
+	}
+}
