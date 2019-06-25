@@ -1,0 +1,112 @@
+   <footer class="footer row bg-light pt-5 pb-5">
+   	<div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
+   		<div class="row">
+   			<div class="col-md-4">
+   				<ul class="list-unstyled">
+   					<li>
+   						<h4>Site info</h4>
+   					</li>
+   					<li>Docs mantained by
+   						<a href="//lists.perl.org/list/perl5-porters.html"
+   							rel="noopener">Perl 5 Porters</a>
+   					</li>
+   					<li>Perldoc site development sponsored by
+   						<a href="//opusvl.com" rel="noopener"><img class="opus-logo"
+   								src="/public/img/opusvl_logo.svg" alt="OpusVL Logo"></a>
+   					</li>
+   				</ul>
+   			</div>
+   			<div class="col-md-8">
+   				<div class="row">
+   					<div class="col-md-6 col-lg-3">
+   						<ul class=" list-unstyled">
+   							<li>
+   								<h4>Manuals</h4>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-overview.html">Overview</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-tutorials.html">Tutorials</a>
+   							</li>
+   							<li>
+   								<a href="/5.[% major %].[% minor %]/index-faq.html">FAQs</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-history.html">Changes</a>
+   							</li>
+   						</ul>
+   					</div>
+   					<div class="col-md-6 col-lg-3">
+   						<ul class=" list-unstyled">
+   							<li>
+   								<h4>Reference</h4>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-language.html">Language</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-functions.html">Functions</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/perlop.html">Operators</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/perlvar.html">Variables</a>
+   							</li>
+   						</ul>
+   					</div>
+   					<div class="col-md-6 col-lg-3">
+   						<ul class=" list-unstyled">
+   							<li>
+   								<h4>Modules</h4>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-modules-A.html">Modules</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-pragmas.html">Pragmas</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-utilities.html">Utilities</a>
+   							</li>
+   						</ul>
+   					</div>
+   					<div class="col-md-6 col-lg-3">
+   						<ul class=" list-unstyled">
+   							<li>
+   								<h4>Misc</h4>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-licence.html">License</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-internals.html">Internals</a>
+   							</li>
+   							<li>
+   								<a
+   									href="/5.[% major %].[% minor %]/index-platforms.html">Platforms</a>
+   							</li>
+   						</ul>
+   					</div>
+   				</div>
+   			</div>
+   			<div class=" col-12 footer-inf text-center">
+   				<small>perldoc.perl.org - Official documentation for the Perl
+   					programming language</small>
+   			</div>
+   		</div>
+   	</div>
+   </footer>

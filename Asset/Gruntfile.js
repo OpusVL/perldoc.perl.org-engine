@@ -2,27 +2,29 @@
 'use strict';
 
 module.exports = function(grunt) {
-	var uglify = require('./grunt/uglify')(),
-		sass = require('./grunt/sass')(),
+	var sass = require('./grunt/sass')(),
 		watch = require('./grunt/watch')(),
-		image = require('./grunt/image')();
+		image = require('./grunt/image')(),
+		autoprefixer = require('./grunt/autoprefixer')(),
+		uglify = require('./grunt/uglify')();
 
 	grunt.initConfig({
 		banner: '/* Perldoc - http://perdoc.perl.org */\n',
-		uglify: uglify,
 		sass: sass,
+		uglify: uglify,
+		autoprefixer: autoprefixer,
 		image: image,
 		watch: watch
 	});
 
 	[
+		'grunt-autoprefixer',
 		'grunt-contrib-uglify',
-		'grunt-contrib-sass',
 		'grunt-contrib-sass',
 		'grunt-image',
 		'grunt-contrib-watch'
 	].forEach(grunt.loadNpmTasks);
 
 	// Tasks
-	grunt.registerTask('default', ['image', 'uglify', 'sass']);
+	grunt.registerTask('default', ['image', 'uglify', 'sass', 'autoprefixer']);
 };

@@ -1,155 +1,158 @@
 'use strict';
 
-if (typeof Object.assign != 'function') {
-	// Must be writable: true, enumerable: false, configurable: true
-	Object.defineProperty(Object, 'assign', {
-		value: function assign(target, varArgs) {
-			// .length of function is 2
-			'use strict';
-
-			if (target == null) {
-				// TypeError if undefined or null
-				throw new TypeError('Cannot convert undefined or null to object');
-			}
-
-			var to = Object(target);
-
-			for (var index = 1; index < arguments.length; index++) {
-				var nextSource = arguments[index];
-
-				if (nextSource != null) {
-					// Skip over if undefined or null
-					for (var nextKey in nextSource) {
-						// Avoid bugs when hasOwnProperty is shadowed
-						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-							to[nextKey] = nextSource[nextKey];
-						}
-					}
-				}
-			}
-			return to;
-		},
-		writable: true,
-		configurable: true
-	});
-}
-// Production steps of ECMA-262, Edition 5, 15.4.4.18
-// Reference: http://es5.github.io/#x15.4.4.18
-if (!Array.prototype.forEach) {
-	Array.prototype.forEach = function(callback /*, thisArg*/) {
-		var T, k;
-
-		if (this == null) {
-			throw new TypeError('this is null or not defined');
-		}
-
-		// 1. Let O be the result of calling toObject() passing the
-		// |this| value as the argument.
-		var O = Object(this);
-
-		// 2. Let lenValue be the result of calling the Get() internal
-		// method of O with the argument "length".
-		// 3. Let len be toUint32(lenValue).
-		var len = O.length >>> 0;
-
-		// 4. If isCallable(callback) is false, throw a TypeError exception.
-		// See: http://es5.github.com/#x9.11
-		if (typeof callback !== 'function') {
-			throw new TypeError(callback + ' is not a function');
-		}
-
-		// 5. If thisArg was supplied, let T be thisArg; else let
-		// T be undefined.
-		if (arguments.length > 1) {
-			T = arguments[1];
-		}
-
-		// 6. Let k be 0.
-		k = 0;
-
-		// 7. Repeat while k < len.
-		while (k < len) {
-			var kValue;
-
-			// a. Let Pk be ToString(k).
-			//    This is implicit for LHS operands of the in operator.
-			// b. Let kPresent be the result of calling the HasProperty
-			//    internal method of O with argument Pk.
-			//    This step can be combined with c.
-			// c. If kPresent is true, then
-			if (k in O) {
-				// i. Let kValue be the result of calling the Get internal
-				// method of O with argument Pk.
-				kValue = O[k];
-
-				// ii. Call the Call internal method of callback with T as
-				// the this value and argument list containing kValue, k, and O.
-				callback.call(T, kValue, k, O);
-			}
-			// d. Increase k by 1.
-			k++;
-		}
-		// 8. return undefined.
-	};
-}
 function navHeight() {
-	var navHeight = document.querySelector('nav').offsetHeight;
-	$('.wrapper').css({
-		'padding-top': navHeight + 'px'
-	});
+	document.querySelector('.wrapper').style.paddingTop =
+		document.querySelector('nav').offsetHeight + 'px';
 }
+
+// global vars
+var currentURL;
+var searchFiltered;
+var userInput = document.getElementById('searchinput');
+var pathname = window.location.pathname;
+var menuItems;
+var latestVersions;
+var currVersion;
+var searchResults = document.getElementById('search-results');
+var matchArr;
+var userInputVal;
+
+// static search functionality to search current version for functions, methods, etc ...
+var searchItems = function() {
+	var userMatched = searchFiltered.filter(function(el) {
+		var names = el.name.replace(/::/gi, ' ');
+		names = names.replace('_', ' ');
+		matchArr = names.toLowerCase().split(' ');
+		userInputVal = userInput.value
+			.trim()
+			.toLowerCase()
+			.split(' ');
+		var intersection = userInputVal.filter(function(ele) {
+			return matchArr.indexOf(ele) > -1;
+		});
+		return intersection.length != 0;
+	});
+	if (userMatched.length === 0) {
+		return;
+	}
+	if (userMatched.length === 1) {
+		return (window.location.href = userMatched[0].url);
+	} else {
+		searchResults.innerHTML = '';
+		userMatched.forEach(function(element) {
+			var matcheAnswerElement = document.createElement('a');
+			matcheAnswerElement.className = 'dropdown-item';
+			matcheAnswerElement.href = element.url;
+			matcheAnswerElement.innerHTML = element.name.replace(/::/gi, ' ');
+			searchResults.appendChild(matcheAnswerElement);
+		});
+	}
+};
+
+// populate versions for the Perl Versions menu dropdown
+var checkMenuItems = function() {
+	fetch('/versions.json')
+		.then(function(res) {
+			return res.json();
+		})
+		.then(function(data) {
+			menuItems = Object.assign({}, data.versions);
+			latestVersions = Object.assign({}, data.latest);
+			currVersion = Object.assign({}, data.me);
+		})
+		.then(function() {
+			currentURL = '/' + pathname.split('/')[1] + '/search.json';
+			fetch(currentURL)
+				.then(function(resp) {
+					return resp.json();
+				})
+				.then(function(jsonD) {
+					searchFiltered = jsonD;
+				});
+			var allversions = document.getElementById('dropdown-menu-links');
+			var menuItemsArray = Object.keys(menuItems).map(function(key) {
+				return [
+					Number(key),
+					Object.keys(menuItems[key]).map(function(lastKey) {
+						return Number(lastKey);
+					})
+				];
+			});
+			menuItemsArray = menuItemsArray.sort().reverse();
+
+			if (allversions) {
+				menuItemsArray.forEach(function(el, index) {
+					var majorVersion = document.createElement('p');
+					majorVersion.classList.add('dropdown-item', 'major-version');
+					var dividerDiv = document.createElement('div');
+					dividerDiv.classList.add('dropdown-divider');
+					majorVersion.innerHTML = el[0];
+					allversions.appendChild(majorVersion);
+
+					el[1].forEach(function(minorEl) {
+						var minorVersion = document.createElement('a');
+						minorVersion.classList.add('dropdown-item', 'minor-version');
+						minorVersion.innerHTML = '5.' + el[0] + '.' + minorEl;
+						minorVersion.setAttribute('href', '/5.' + el[0] + '.' + minorEl);
+						allversions.appendChild(minorVersion);
+						allversions.appendChild(dividerDiv);
+					});
+				});
+			}
+		});
+};
+
 window.addEventListener('DOMContentLoaded', function() {
 	navHeight();
-
-	var menuItems;
-	var latestVersions;
-	var checkMenuItems = function checkMenuItems() {
-		fetch('/versions.json')
-			.then(function(res) {
-				return res.json();
-			})
-			.then(function(data) {
-				menuItems = Object.assign({}, data.versions);
-				latestVersions = Object.assign({}, data.latest);
-			});
-	};
-
 	checkMenuItems();
-
-	setTimeout(function() {
-		var allversions = document.getElementById('dropdown-menu-links');
-
-		// create array of major versions
-		var menuItemsArray = Object.keys(menuItems).map(function(key) {
-			return [
-				Number(key),
-				Object.keys(menuItems[key]).map(function(lastKey) {
-					return Number(lastKey);
-				})
-			];
-		});
-		menuItemsArray = menuItemsArray.sort().reverse();
-
-		if (allversions) {
-			menuItemsArray.forEach(function(el, index) {
-				var majorVersion = document.createElement('p');
-				majorVersion.classList.add('dropdown-item', 'major-version');
-				var dividerDiv = document.createElement('div');
-				dividerDiv.classList.add('dropdown-divider');
-				majorVersion.innerHTML = el[0];
-				allversions.appendChild(majorVersion);
-
-				el[1].forEach(function(minorEl) {
-					var minorVersion = document.createElement('a');
-					minorVersion.classList.add('dropdown-item', 'minor-version');
-					minorVersion.innerHTML = '5.' + el[0] + '.' + minorEl;
-					minorVersion.setAttribute('href', '/5.' + el[0] + '.' + minorEl);
-					allversions.appendChild(minorVersion);
-					allversions.appendChild(dividerDiv);
-				});
-			});
-		}
-	}, 250);
 });
+
+// check nav height and add body padding (due to position fixed)
 window.addEventListener('resize', navHeight);
 window.addEventListener('orientationchange', navHeight);
+
+// fix menu closin when selecting a letter from Functions menu
+var letters = Array.from(document.querySelectorAll('.letters'));
+letters.forEach(function(element) {
+	element.addEventListener('click', function(item) {
+		document.querySelector('.dropdown-menu.show').classList.remove('show');
+		document.querySelector('.dropdown.show').classList.remove('.show');
+		document.querySelector('.navbar-collapse.show').classList.remove('show');
+		document
+			.querySelector('.navbar-toggler')
+			.setAttribute('aria-expanded', 'false');
+	});
+});
+
+// scroll offset padding to see header
+window.addEventListener('hashchange', function() {
+	window.scrollTo(window.scrollX, window.scrollY - 80);
+});
+
+// open dropdown when searching and multiple results
+document
+	.querySelector('.search-wrapper')
+	.addEventListener('submit', function(ev) {
+		ev.preventDefault();
+		searchItems();
+		searchResults.classList.add('show');
+		searchResults.parentNode.classList.add('show');
+		searchResults.childNodes[0].focus();
+	});
+
+// fix dropdown open / close when using search and click
+document
+	.getElementById('navbarDropdown5')
+	.addEventListener('click', function() {
+		searchItems();
+		if (searchResults.classList.contains('show')) {
+			searchResults.classList.add('show');
+			searchResults.parentNode.classList.add('show');
+		} else {
+			searchResults.classList.remove('show');
+			searchResults.parentNode.classList.remove('show');
+			if (searchResults.childElementCount > 1) {
+				searchResults.childNodes[0].focus();
+			}
+		}
+	});
