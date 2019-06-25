@@ -37,6 +37,13 @@ sub main {
     # Download a list of the latest perls
     $global->{modules}->{source_sync}->run();
     if (!$global->{rebuild}) {
+        sync_state();
+        $global->{modules}->{extract_pod}->make_index();
+        exit 0;
+    }
+    else {
+        sync_state();
+        $global->{modules}->{extract_pod}->make_index();
         exit 0;
     }
     sync_state();

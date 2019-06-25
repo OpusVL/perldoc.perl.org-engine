@@ -68,8 +68,10 @@
             </div>
           </main>
         </div>
+
         [% PROCESS footer.tt %]
         [% PROCESS beta.tt %]
+
         <script src="/public/js/main.min.js"></script>
       </body>
 
