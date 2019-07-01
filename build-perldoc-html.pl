@@ -19,7 +19,6 @@ use Template;
 use Perldoc::Config;
 use JSON;
 
-
 use constant TRUE  => 1;
 use constant FALSE => 0;
 
@@ -376,6 +375,15 @@ foreach my $category (Perldoc::Function::Category::list()) {
     $url .= '.html';
     my $description = Perldoc::Function::description($function);
     push @functions,{name=>$function, url=>$url, description=>$description};
+
+    if (!$search_uniq->{$module}) {
+      push @$search,{ 
+        name  =>  $function, 
+        url   =>  "$base_url$url" 
+      };
+      $search_uniq->{$module} = 1;
+    }
+
   }
   push @{$function_data{function_cat}},{name=>$name, link=>$link, functions=>\@functions};
 }
