@@ -444,7 +444,7 @@ close($fh);
 
 sub autolink {
   my ($start,$txt,$end,$linkpath) = @_;
-  $txt =~ s!\b(perl\w+)\b!(Perldoc::Page::exists($1))?qq(<a href="$linkpath$1.html">$1</a>):$1!sge;
+  $txt =~ s!\b(perl\w+)\b!(Perldoc::Page::exists($1))?qq(<a class='autolink' href="$linkpath$1.html">$1</a>):$1!sge;
   return "<$start>$txt<$end>";
 }
 
@@ -472,4 +472,3 @@ sub optionspec {
   }
   return @getopt_list;
 }
-

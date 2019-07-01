@@ -119,7 +119,7 @@ sub view_head1 {
   my ($self,$head1) = @_;
   my $title = $head1->title->present($self);
   my $anchor = escape($head1->title->present('Pod::POM::View::Text'));
-  return qq{<a id="$anchor"></a><h2 class='h2' >$title</h2>\n}.
+  return qq{<a class='view-head1' id="$anchor"></a><h2 class='h2' >$title</h2>\n}.
          $head1->content->present($self);
 }
 
@@ -130,7 +130,7 @@ sub view_head2 {
   my ($self,$head2) = @_;
   my $title = $head2->title->present($self);
   my $anchor = escape($head2->title->present('Pod::POM::View::Text'));
-  return qq{<a id="$anchor"></a><h3 class='h3' >$title</h3>\n}.
+  return qq{<a class='view-head2' id="$anchor"></a><h3 class='h3' >$title</h3>\n}.
          $head2->content->present($self);
 }
 
@@ -141,7 +141,7 @@ sub view_head3 {
   my ($self,$head3) = @_;
   my $title = $head3->title->present($self);
   my $anchor = escape($head3->title->present('Pod::POM::View::Text'));
-  return qq{<a id="$anchor"></a><h4 class='h4' >$title</h4>\n}.
+  return qq{<a class='view-head3' id="$anchor"></a><h4 class='h4' >$title</h4>\n}.
          $head3->content->present($self);
 }
 
@@ -204,7 +204,7 @@ sub view_item {
 
     if (length $title) {
       my $anchor = escape($item->title->present('Pod::POM::View::Text'));
-      $title = qq{<a id="$anchor"></a><strong>$title</strong>};
+      $title = qq{<a class='view-title' id="$anchor"></a><strong>$title</strong>};
     }
   }
   return $start_tag."$title\n".$item->content->present($self).$end_tag."\n";
@@ -282,12 +282,13 @@ sub view_seq_link {
       (my $function = $section) =~ s/(-?[a-z]+).*/$1/i;
       if (Perldoc::Function::exists($function)) {
         $href = '[P( path )P]'."functions/$function.html";
-        return qq{<a href="$href">$section</a>};
+        return qq{<a class='function-name' href="$href">$section</a>};
       } else {
         $section = escape($section);
+        # maybe here is the magical missing opendir link that becomes only and id ???
         $href = '[P( path )P]'."perlfunc.html#$section";
         #warn("Missing function '$function' in link '$link' from page '$document_name', using $href\n");
-        return qq{<a href="$href">$inferred</a>};
+        return qq{<a class='missing-link' href="$href">$inferred</a>};
       }
     }
     if ($page) {
@@ -296,7 +297,7 @@ sub view_seq_link {
         $href =~ s/::/\//g;
       } elsif (Perldoc::Function::exists($page)) {
         $href = '[P( path )P]'."functions/$page.html";
-        return qq{<a href="$href">$page</a>};      
+        return qq{<a clas='function-exists' href="$href">$page</a>};      
       } else {
         $href = "https://search.cpan.org/perldoc/$page";
       }        
@@ -305,12 +306,12 @@ sub view_seq_link {
       (my $function = $section) =~ s/(-?[a-z]+).*/$1/i;
       if (Perldoc::Function::exists($function)) {
         $href = "$function.html";
-        return qq{<a href="$href">$section</a>};
+        return qq{<a class='same-name-as-function' href="$href">$section</a>};
       } else {
         $section = escape($section);
         $href = "../perlfunc.html#$section";
         #warn("Missing function '$function' in link '$link' from page '$document_name', using $href\n");
-        return qq{<a href="$href">$inferred</a>};
+        return qq{<a class='missing-same-name' href="$href">$inferred</a>};
       }      
     }
     if ($section) {
@@ -320,7 +321,7 @@ sub view_seq_link {
   } elsif ($type eq 'man') {
     return qq{<i>$inferred</i>};
   } elsif ($type eq 'url') {
-    return qq{<a href="$page">$inferred</a>};
+    return qq{<a class='link-to-page' href="$page">$inferred</a>};
   }
 }
 
