@@ -36,8 +36,12 @@
 		if (userMatched.length === 0) {
 			searchResults.innerHTML =
 				'<p class="dropdown-item major-version">No results</p>';
+			searchResults.classList.add('show');
+			searchResults.parentNode.classList.add('show');
 		} else if (userMatched.length === 1) {
 			searchResults.innerHTML = '';
+			searchResults.classList.remove('show');
+			searchResults.parentNode.classList.remove('show');
 			window.location.href = userMatched[0].url;
 		} else {
 			searchResults.innerHTML = '';
@@ -48,6 +52,7 @@
 				matcheAnswerElement.innerHTML = element.name.replace(/::/gi, ' ');
 				searchResults.appendChild(matcheAnswerElement);
 			});
+			searchResults.childNodes[0].focus();
 		}
 	};
 
