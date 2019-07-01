@@ -245,7 +245,7 @@ sub make_index {
     close($fh);
 
     # Copy the required assets in too
-    dircopy('Asset/public',$global->{config}->{'pod-dir'}) or die $!;
+    dircopy('Asset/public',$global->{config}->{'pod-dir'}.'/public') or die $!;
 }
 
 sub order_version {
