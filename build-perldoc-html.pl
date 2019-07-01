@@ -379,7 +379,7 @@ foreach my $category (Perldoc::Function::Category::list()) {
     if (!$search_uniq->{$function}) {
       push @$search,{ 
         name  =>  $function, 
-        url   =>  "$base_url$url" 
+        url   =>  "$base_url/functions/$url" 
       };
       $search_uniq->{$function} = 1;
     }
