@@ -349,6 +349,13 @@ foreach my $letter ('A'..'Z') {
       $url .= '.html';
       my $description = Perldoc::Function::description($function);
       push @functions,{name=>$function, url=>$url, description=>$description};
+      if (!$search_uniq->{$function}) {
+        push @$search,{ 
+          name  =>  $function, 
+          url   =>  "$base_url/functions/$url" 
+        };
+        $search_uniq->{$function} = 1;
+      }
     }
   } 
   push @{$function_data{function_az}}, {letter=>$letter, link=>$link, functions=>\@functions};
@@ -375,15 +382,6 @@ foreach my $category (Perldoc::Function::Category::list()) {
     $url .= '.html';
     my $description = Perldoc::Function::description($function);
     push @functions,{name=>$function, url=>$url, description=>$description};
-
-    if (!$search_uniq->{$function}) {
-      push @$search,{ 
-        name  =>  $function, 
-        url   =>  "$base_url/functions/$url" 
-      };
-      $search_uniq->{$function} = 1;
-    }
-
   }
   push @{$function_data{function_cat}},{name=>$name, link=>$link, functions=>\@functions};
 }
