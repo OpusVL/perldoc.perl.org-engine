@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 
 function navHeight() {
@@ -17,6 +18,7 @@ var searchResults = document.getElementById('search-results');
 var matchArr;
 var userInputVal;
 
+
 // static search functionality to search current version for functions, methods, etc ...
 var searchItems = function() {
 	var userMatched = searchFiltered.filter(function(el) {
@@ -33,9 +35,9 @@ var searchItems = function() {
 		return intersection.length != 0;
 	});
 	if (userMatched.length === 0) {
-		return;
+		searchResults.innerHTML = '<p class="dropdown-item major-version">No results</p>'
 	}
-	if (userMatched.length === 1) {
+	else if (userMatched.length === 1) {
 		return (window.location.href = userMatched[0].url);
 	} else {
 		searchResults.innerHTML = '';
@@ -102,6 +104,8 @@ var checkMenuItems = function() {
 		});
 };
 
+
+
 window.addEventListener('DOMContentLoaded', function() {
 	navHeight();
 	checkMenuItems();
@@ -137,7 +141,9 @@ document
 		searchItems();
 		searchResults.classList.add('show');
 		searchResults.parentNode.classList.add('show');
-		searchResults.childNodes[0].focus();
+		console.log( searchResults.childNodes.length )
+		if ( searchResults.childNodes.length > 1){
+		searchResults.childNodes[0].focus();}
 	});
 
 // fix dropdown open / close when using search and click
@@ -156,3 +162,8 @@ document
 			}
 		}
 	});
+
+
+
+})()
+
