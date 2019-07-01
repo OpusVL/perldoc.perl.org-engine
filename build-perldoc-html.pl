@@ -376,12 +376,12 @@ foreach my $category (Perldoc::Function::Category::list()) {
     my $description = Perldoc::Function::description($function);
     push @functions,{name=>$function, url=>$url, description=>$description};
 
-    if (!$search_uniq->{$module}) {
+    if (!$search_uniq->{$function}) {
       push @$search,{ 
         name  =>  $function, 
         url   =>  "$base_url$url" 
       };
-      $search_uniq->{$module} = 1;
+      $search_uniq->{$function} = 1;
     }
 
   }
