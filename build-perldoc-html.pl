@@ -270,8 +270,9 @@ foreach my $module_index ('A'..'Z') {
 
     if (!$search_uniq->{$module}) {
       push @$search,{ 
-        name  =>  $module, 
-        url   =>  "$base_url$module_link" 
+        name        => $module, 
+        url         => "$base_url$module_link",
+        description => $module
       };
       $search_uniq->{$module} = 1;
     }
@@ -303,6 +304,15 @@ foreach my $module_index ('A'..'Z') {
     my $filename = catfile($Perldoc::Config::option{output_path},$module_data{pageaddress});
     check_filepath($filename);
     
+    if (!$search_uniq->{$module}) {
+      push @$search,{ 
+        name        => $module, 
+        url         => "$base_url$module_link",
+        description => $module
+      };
+      $search_uniq->{$module} = 1;
+    }
+
     $template->process('default.tt',{%Perldoc::Config::option, %module_data},$filename) || die "Failed processing $module\n".$template->error;
   }
 }
@@ -351,8 +361,9 @@ foreach my $letter ('A'..'Z') {
       push @functions,{name=>$function, url=>$url, description=>$description};
       if (!$search_uniq->{$function}) {
         push @$search,{ 
-          name  =>  $function, 
-          url   =>  "$base_url/functions/$url" 
+          name        => $function, 
+          url         => "$base_url/functions/$url",
+          description => $description 
         };
         $search_uniq->{$function} = 1;
       }
@@ -382,6 +393,15 @@ foreach my $category (Perldoc::Function::Category::list()) {
     $url .= '.html';
     my $description = Perldoc::Function::description($function);
     push @functions,{name=>$function, url=>$url, description=>$description};
+
+    if (!$search_uniq->{$function}) {
+      push @$search,{ 
+        name        => $function, 
+        url         => "$base_url/functions/$url",
+        description => $description
+      };
+      $search_uniq->{$function} = 1;
+    }
   }
   push @{$function_data{function_cat}},{name=>$name, link=>$link, functions=>\@functions};
 }
@@ -431,6 +451,15 @@ foreach my $function (Perldoc::Function::list()) {
 
   $filename  = catfile($Perldoc::Config::option{output_path},$function_data{pageaddress});
   check_filepath($filename);
+  
+  if (!$search_uniq->{$function}) {
+    push @$search,{ 
+      name        => $function, 
+      url         => "$base_url".$function_data{pageaddress},
+      description => $function
+    };
+    $search_uniq->{$function} = 1;
+  }
   
   $function_template->process('default.tt',{%Perldoc::Config::option, %function_data},$filename) || die "Failed processing perlfunc\n".$function_template->error;
 }
