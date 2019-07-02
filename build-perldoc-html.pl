@@ -241,6 +241,15 @@ foreach my $section (Perldoc::Section::list()) {
 
     my $filename  = catfile($Perldoc::Config::option{output_path},$page_data{pageaddress});    
     check_filepath($filename);
+
+    if (!$search_uniq->{$page}) {
+      push @$search,{ 
+        name        => $page, 
+        url         => "$base_url$page_link.html",
+        description => $page
+      };
+      $search_uniq->{$page} = 1;
+    }
     
     $template->process('default.tt',{%Perldoc::Config::option, %page_data},$filename) || die "Failed processing $page\n".$template->error;
   }  
