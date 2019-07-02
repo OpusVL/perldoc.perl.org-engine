@@ -11,6 +11,7 @@ javascript/
 opensearch.xml
 **.tar.gz
 work/*
+docker/.dev
 docker/ssh/idrsa
 docker/docker-compose.override.yml
 syntax.cache
