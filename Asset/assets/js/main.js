@@ -73,7 +73,12 @@
 				currVersion = Object.assign({}, data.me);
 			})
 			.then(function() {
-				currentURL = '/' + pathname.split('/')[1] + '/search.json';
+				console.log(currentURL, pathname.split('/')[1]);
+				if (pathname.split('/')[1].length === 0) {
+					currentURL = '/search.json';
+				} else {
+					currentURL = '/' + pathname.split('/')[1] + '/search.json';
+				}
 				fetch(currentURL)
 					.then(function(resp) {
 						return resp.json();
