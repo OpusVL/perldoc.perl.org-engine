@@ -73,12 +73,29 @@
 				currVersion = Object.assign({}, data.me);
 			})
 			.then(function() {
-				console.log(currentURL, pathname.split('/')[1]);
-				if (pathname.split('/')[1].length === 0) {
+				// chek the path for 5.xxxxx and if it exists currentURL becomes domain/5.foo-xxx
+				// else the search.json file is located at the root plus 5.xxxx curent version
+				if (pathname.split('/')[1].includes('5.')) {
+					currentURL =
+						window.location.origin +
+						'/' +
+						pathname.split('/')[1] +
+						'/search.json';
+				} else if (pathname.split('/')[1].length === 0) {
 					currentURL = '/search.json';
 				} else {
 					currentURL = '/' + pathname.split('/')[1] + '/search.json';
 				}
+				console.log(
+					'pathname includes 5',
+					pathname.split('/')[1].includes('5.'),
+					'pathname length ',
+					pathname.split('/')[1].length,
+					'current URL',
+					currentURL,
+					'pathname',
+					pathname
+				);
 				fetch(currentURL)
 					.then(function(resp) {
 						return resp.json();
