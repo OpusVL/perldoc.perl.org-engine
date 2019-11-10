@@ -99,6 +99,10 @@
    								<a
    									href="/5.[% major %].[% minor %]/index-platforms.html">Platforms</a>
    							</li>
+                            <li>
+                                <a
+                                    href="/5.[% major %].[% minor %]/index-about.html">About</a>
+                            </li>
    						</ul>
    					</div>
    				</div>
