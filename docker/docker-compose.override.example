@@ -1,0 +1,11 @@
+#
+# This allows you to override the entrypoint to the system as well as the 'work' directory
+# where all the perls are built.
+#
+
+version: "3"
+services:
+  perldoc:
+    volumes:
+      - "$HOME/.work:/root/perldoc.perl.org/work"
+      - "./entrypoint.sh:/entrypoint.sh"
