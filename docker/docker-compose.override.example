@@ -7,5 +7,12 @@ version: "3"
 services:
   perldoc:
     volumes:
+      - "$HOME/perldoc.perl.org-engine:/root/dev-src"
       - "$HOME/.work:/root/perldoc.perl.org/work"
-      - "./entrypoint.sh:/entrypoint.sh"
+      - "./dev-entrypoint.sh:/entrypoint.sh"
+  nginx:
+    image: nginx:latest
+    volumes:
+      - "$HOME/.work/output:/usr/share/nginx/html:ro"
+    ports:
+      - 0.0.0.0:8080:80
