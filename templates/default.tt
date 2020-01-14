@@ -57,8 +57,8 @@
                 <article class="col-sm-12 content">
                   <div class="documentation-wrapper">
                     <div id="perl_version">
-                      <h1 class='page-title'> Perl 5 version [% perl5_version %]
-                        documentation</h1>
+                      <h7 class='page-title'> Perl 5 version [% perl5_version %]
+                        documentation</h7>
                     </div>
                     [% INCLUDE $content_tt %]
                   </div>
