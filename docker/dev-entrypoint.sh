@@ -37,5 +37,5 @@ do
 #    git commit -am "AutoCommit"
 #    git push -f origin master
     echo "Sleeping for 24 hours before retrying";
-#    perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
+    perl -e 'print "Sleeping 60 seconds\n"; sleep(60)'
 done

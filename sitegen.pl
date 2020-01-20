@@ -27,36 +27,168 @@ our $global = {
         template    => OpusVL::PerlDoc::Template->new(),
         extract_pod => OpusVL::PerlDoc::ExtractPod->new(),
     },
+    order           =>  [qw(download env build pod done)],
+    order_index     =>  {
+        download        =>  0,
+        env             =>  1,
+        build           =>  2,
+        pod             =>  3,
+        done            =>  4
+    }
 };
-
-my $schedule = {};
 
 sub main {
     # Display progress
     $global->{ua}->show_progress(1);
     # Download a list of the latest perls
     $global->{modules}->{source_sync}->run();
-    if (!$global->{rebuild}) {
-        exit 0;
+
+    # main engine
+    my $runcount = 0;
+
+    while (
+        $global->{changed} || $runcount == 0
+    )
+    {
+        $runcount++;
+
+        my $updated = 0;
+        foreach my $major (keys %{$global->{perl}}) 
+        {
+            foreach my $minor ( keys %{ $global->{perl}->{$major} } ) 
+            {
+                $updated += engine($major,$minor);
+            }
+        }
+
+        # Regenerate the index if it took more than one iteration 
+        # to trigger this.
+        if ($updated == 0 && $runcount > 1) {
+            # Remove the changed flag so we can exit
+            $global->{changed} = 0;
+
+            # Regnerate the index and versions.json
+            $global->{modules}->{extract_pod}->make_index();
+
+            # Regenerate all the PODs that rely on versions.json
+            # for there templates
+            foreach my $major (keys %{$global->{perl}}) 
+            {
+                foreach my $minor ( keys %{ $global->{perl}->{$major} } ) 
+                {
+                    # Regenerate every POD - with the correct versions
+                    $global->{modules}->{extract_pod}->run($major,$minor);
+                }
+            }
+
+            # Re make the index once more with the latest set of versions too
+            $global->{modules}->{extract_pod}->make_index();
+        }
     }
-    sync_state();
-    # Setup enviroment (write make files)
-    $global->{modules}->{make_env}->run();
-    sync_state();
-    # Execute the builds
-    $global->{modules}->{make_env}->build();
-    sync_state();
-    # setup the perldoc base
-    $global->{modules}->{extract_pod}->run();
-    sync_state();
-    $global->{modules}->{extract_pod}->make_index();
-    sync_state();
-    $global->{modules}->{extract_pod}->run();
-    sync_state();
-    $global->{modules}->{extract_pod}->make_index();
+
+    return 0;
+}
+
+sub engine {
+    my ($major,$minor) = @_;
+
+    my $env         = $global->{perl}->{$major}->{$minor};
+    my $state       = $env->{state}->{stage};
+    my ($state_only)= $state =~ m/^([a-z]+)/;
+    my ($state_mod) = $state =~ m/(bad|ok)$/;
+
+    my $return = 1;
+
+    if (!$state_mod) {
+        # Must be new or done, which should be impossible - as we removed all
+        # that bad code right?
+        # Just reset to download_bad if this happens.
+        $global->{perl}->{$major}->{$minor}->{state}->{stage} = 'download_bad';
+        ($state_only)   = $state =~ m/^([a-z]+)/;
+        $state_mod      = 'bad';
+        # This will be missed this iteration and picked up next
+        # as the download also sets the default state and has
+        # already been done.
+    }
+    else 
+    {
+        my $level_max   = $global->{order_index}->{$global->{order}->[-1]};
+        my $level       = $global->{order_index}->{$state_only};
+        my $dev_mode    = 0;
+
+        if ($ENV{'DEV_MODE'}) {
+            $dev_mode = $ENV{'DEV_MODE'};
+            print "Dev mode enabled, level: $dev_mode\n";
+        }
+
+        print "Perl($major.$minor): state($state/$state_only) = $level/$level_max\n";
+
+        if ($state_mod eq 'bad') {
+            if ($level == 1) 
+            {
+                # We failed making the env, try again
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{make_env}->run($major,$minor);
+            }
+            elsif ($level == 2) 
+            {
+                # We failed making the env
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{make_env}->run($major,$minor);
+            }
+            elsif ($level == 3) 
+            {
+                # We failed making the pod
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{extract_pod}->run($major,$minor);
+            }
+            elsif ($level == 4) 
+            {
+                # We failed making the pod
+                print "Done($major,$minor): Bad?!?! how\n";
+                die;
+            }
+        }
+        else {
+            if ($level == 0) 
+            {
+                # We completed a build, lets make env
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{make_env}->run($major,$minor);
+            }
+            elsif ($level == 1) 
+            {
+                # We made the env, lets do the build
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{make_env}->build($major,$minor);
+            }
+            elsif ($level == 2 || $dev_mode == 1) 
+            {
+                # We made the build lets do the POD
+                $global->{perl}->{$major}->{$minor} =
+                    $global->{modules}->{extract_pod}->run($major,$minor);
+            }
+            elsif ($level == 3) {
+                # Pod extract ok we need to do the index stuff
+                # $global->{modules}->{extract_pod}->make_index($major,$minor);
+                $global->{perl}->{$major}->{$minor}->{state}->{stage} = 'done_ok';
+            }
+            elsif ($level == 4) {
+                print "Done($major,$minor): Nothing to do.\n";
+                $return = 0;
+            }
+        }
+    }
+
+    print "State now: ".$global->{perl}->{$major}->{$minor}->{state}->{stage}."\n\n";
+
+    if ($return) {
+        $global->{changed} = 1;
+    }
+
     sync_state();
 
-    return 1;
+    return $return;
 }
 
 sub sync_state {
@@ -102,46 +234,38 @@ sub new {
 }
 
 sub run {
-    foreach my $major (keys %{ $global->{perl} }) {
-        foreach my $minor (keys %{ $global->{perl}->{$major} }) {
-            my $env = $global->{perl}->{$major}->{$minor};
-            my $state = $env->{state}->{stage};
+    my ($self,$major,$minor) = @_;
 
-            if ($state !~ m/^pod_|build_ok/) {
-                print "PodExtract($major,$minor): Skipped ($state)\n";
-                next;
-            }
+    my $env = $global->{perl}->{$major}->{$minor};
+    my $state = $env->{state}->{state};
 
-            my $perl = "perl-$major.$minor";
-            my $logpath = "/tmp/$perl-pod.log";
-            my ($output, $exit, @args);
+    my $perl = "perl-$major.$minor";
+    my $logpath = "/tmp/$perl-pod.log";
+    my ($output, $exit, @args);
 
-            warn "Swapping to: ".$env->{local_path};
-            chdir $env->{local_path};
+    chdir $env->{local_path};
 
-            print  "POD extracting for for: perl-$major.$minor\n";
+    print  "POD extracting for for: perl-$major.$minor\n";
 
-            @args = ('make','-f','Makefile.perldoc','pod');
-            ($output, $exit) = capture_merged { system(@args) };
+    @args = ('make','-f','Makefile.perldoc','pod');
+    ($output, $exit) = capture_merged { system(@args) };
 
-            print "Return value: $exit (Logfile written to: $logpath)\n";
+    print "Return value: $exit (Logfile written to: $logpath)\n";
 
-            open(my $fh,'>',$logpath);
-            print $fh $output;
-            close($fh);
+    open(my $fh,'>',$logpath);
+    print $fh $output;
+    close($fh);
 
-            chdir $global->{config}->{'work-dir'};
+    chdir $global->{config}->{'work-dir'};
 
-            if ($exit == 0) {
-                $env->{state}->{stage} = 'pod_ok';
-            }
-            else {
-                $env->{state}->{stage} = 'pod_bad';
-            }
-
-            $global->{perl}->{$major}->{$minor} = $env;
-        }
+    if ($exit == 0) {
+        $env->{state}->{stage} = 'pod_ok';
     }
+    else {
+        $env->{state}->{stage} = 'pod_bad';
+    }
+
+    return $env;
 }
 
 sub make_index {
@@ -155,12 +279,9 @@ sub make_index {
     foreach my $major (keys %{ $global->{perl} }) {
         foreach my $minor (keys %{ $global->{perl}->{$major} }) {
             $env = $global->{perl}->{$major}->{$minor};
-            my $state = $env->{state}->{stage};
-            if ($state ne 'pod_ok') {
-                print "INDEX($major,$minor): Skipped ($state)\n";
-                next;
+            if ($env->{state}->{stage} eq 'done_ok') {
+                push @versions,[$major,$minor];
             }
-            push @versions,[$major,$minor];
         }
     }
 
@@ -216,9 +337,19 @@ sub make_index {
             make_path($index_path);
             write_html($index_path."/404.html",$output);
         }
+
+        {
+            my $output = "";
+            $global->{tt}->process('templates/about.tt',$ttenv,\$output);
+
+            # Write the output to the output directory
+            my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
+            make_path($index_path);
+            write_html($index_path."/404.html",$output);
+        }
     }
 
-    # Generate the main index = TODO HERE FUCKED
+    # Generate the main index = TODO
     if (!-e 'templates/main_index.tt') {
         warn "No main_index.tt found";
         die;
@@ -239,7 +370,7 @@ sub make_index {
 
     # Write the passed jsons out to passed.json
     my $json_path = join('/',$global->{config}->{'pod-dir'},'versions.json');
-    warn "Writing versions.json to: '$json_path'";
+    print "JSON: Writing versions.json to: '$json_path'";
     open(my $fh,'>',$json_path);
     print $fh $global->{js}->encode($ttenv);
     close($fh);
@@ -301,7 +432,7 @@ use Crypt::Digest::SHA256 qw( sha256_file_hex );
 use Capture::Tiny ':all';
 
 sub new {
-    my ($class,$base) = @_;
+    my ($class) = @_;
 
     # Some private stuff for ourself
     my $self = {};
@@ -312,92 +443,80 @@ sub new {
 }
 
 sub run {
-    foreach my $major (keys %{ $global->{perl} }) {
-        foreach my $minor (keys %{ $global->{perl}->{$major} }) {
-            my $env = $global->{perl}->{$major}->{$minor};
-            my $state = $env->{state}->{stage};
+    my ($self,$major,$minor) = @_;
 
-            if ($state ne 'download_ok') {
-                print "EnvBuild($major,$minor): Skipped ($state)\n";
-                next;
-            }
+    my $env = $global->{perl}->{$major}->{$minor};
+    my $state = $env->{state}->{stage};
 
-            # Writing out the makefile
-            open(my $fh,'>',$env->{make_path});
-            my $makefile = print $fh $global->{modules}->{template}->makefile();
-            close($fh);
+    print "EnvBuild($major,$minor): Working ($state)\n";
 
-            if ($makefile) {
-                print "Env_OK($major,$minor) env_ok\n";
-                $env->{state}->{stage} = 'env_ok';
-            }
-            else {
-                print "Env_BAD($major,$minor) env_bad\n";
-                $env->{state}->{stage} = 'env_bad';
-            }
-            $global->{perl}->{$major}->{$minor} = $env;
-        }
+    # Writing out the makefile
+    open(my $fh,'>',$env->{make_path});
+    my $makefile = print $fh $global->{modules}->{template}->makefile();
+    close($fh);
+
+    if ($makefile) {
+        print "Env_OK($major,$minor) env_ok\n";
+        $env->{state}->{stage} = 'env_ok';
     }
+    else {
+        print "Env_BAD($major,$minor) env_bad\n";
+        $env->{state}->{stage} = 'env_bad';
+    }
+    return $env;
 }
 
 sub build {
-    foreach my $major (keys %{ $global->{perl} }) {
-        foreach my $minor (keys %{ $global->{perl}->{$major} }) {
-            my $env = $global->{perl}->{$major}->{$minor};
-            my $state = $env->{state}->{stage};
+    my ($self,$major,$minor) = @_;
 
-            if ($state ne 'env_ok') {
-                print "Build($major,$minor): Skipped ($state)\n";
-                next;
-            }
+        my $env = $global->{perl}->{$major}->{$minor};
+        my $state = $env->{state}->{stage};
 
-            # Writing out the makefile
-            my $perl = "perl-$major.$minor";
-            my $logpath = "/tmp/$perl.log";
-            my ($output, $response, $exit, @args);
+        # Writing out the makefile
+        my $perl = "perl-$major.$minor";
+        my $logpath = "/tmp/$perl.log";
+        my ($output, $response, $exit, @args);
 
-            chdir $env->{local_path};
+        chdir $env->{local_path};
 
-            print  "Starting buildsteps for: perl-$major.$minor\n";
+        print  "Starting buildsteps for: perl-$major.$minor\n";
 
-            if (-e 'bin/perl') {
-                $output = "Skipped";
-                $response = "Skipped";
-                $exit = 0;
-            }
-            else {
-                @args = ('make','-f','Makefile.perldoc','patch');
-                ($output, $exit) = capture_merged { system(@args) };
-                print "Patch result($exit)\n";
-                print "Beginning main build\n";
-                if ($exit == 0) { 
-                    @args = ('make','-f','Makefile.perldoc','install');
-                    ($output, $exit) = capture_merged { system(@args) };
-                    $response = "Unknown";
-                }
-            }
-
-            print "Return value: $exit (Logfile written to: $logpath)\n";
-
-            open(my $fh,'>',$logpath);
-            print $fh $output;
-            close($fh);
-
-            chdir $global->{config}->{'work-dir'};
-
-            if ($exit == 0)      {
-                $env->{state}->{stage} = 'build_ok';
-            }
-            else {
-                $env->{state}->{stage} = 'build_bad';
-            }
-
-            $response = $env->{state}->{stage};
-            print "BuildSrc($major,$minor) $response\n";
-
-            $global->{perl}->{$major}->{$minor} = $env;
+        if (-e 'bin/perl') {
+            $output = "Skipped";
+            $response = "Skipped";
+            $exit = 0;
         }
-    }
+        else {
+            @args = ('make','-f','Makefile.perldoc','patch');
+            ($output, $exit) = capture_merged { system(@args) };
+            print "Patch result($exit)\n";
+            print "Beginning main build\n";
+            if ($exit == 0) { 
+                @args = ('make','-f','Makefile.perldoc','install');
+                ($output, $exit) = capture_merged { system(@args) };
+                $response = "Unknown";
+            }
+        }
+
+        print "Return value: $exit (Logfile written to: $logpath)\n";
+
+        open(my $fh,'>',$logpath);
+        print $fh $output;
+        close($fh);
+
+        chdir $global->{config}->{'work-dir'};
+
+        if ($exit == 0)      {
+            $env->{state}->{stage} = 'build_ok';
+        }
+        else {
+            $env->{state}->{stage} = 'build_bad';
+        }
+
+        $response = $env->{state}->{stage};
+        print "BuildSrc($major,$minor) $response\n";
+
+        return $env;
 }
 
 
@@ -493,7 +612,8 @@ sub run {
                 $global->{perl}->{$major}->{$minor}->{'download_tarball'}   = join('/',$global->{config}->{'remote-parent'},$link);
 
                 # Set the state
-                $global->{perl}->{$major}->{$minor}->{state} = {'stage'=>'new'};
+                $global->{perl}->{$major}->{$minor}->{state} = {'stage'=>'download_bad'};
+                
                 if (-e $global->{perl}->{$major}->{$minor}->{state_path}) {
                     $global->{perl}->{$major}->{$minor}->{state} = do {
                         local $/;
@@ -521,13 +641,12 @@ sub run {
         my ($major,$minor) = ($_->[0],$_->[1]);
         my $env = $global->{perl}->{$major}->{$minor};
 
-        # If this was already extracted correctly, skip it
-        if ( $env->{state}->{stage} =~ m/^(download_ok|env_.*|build_.*|pod_.*|done_.*)$/) {
-            print "Download($major.$minor): Skipping ($1)\n";
+        my $state = $env->{state};
+        my $stage = $state->{stage};
+
+        if ($stage ne 'download_bad') 
+        {
             next;
-        }
-        else {
-            $global->{rebuild} = 1;
         }
 
         # Generate requests for the files
@@ -577,7 +696,6 @@ sub run {
                 };
                 if ($sha256_local eq $sha256_authoritive) {
                     print "Success downloading: $local_fn SHA256( MATCH $sha256_local )\n";
-                    $global->{perl}->{$major}->{$minor}->{state}->{stage} = 'download_ok';
                 } else {
                     print "Refusing to proceed with $local_fn SHA256( LOCAL: $sha256_local AUTHORITIVE: $sha256_authoritive )\n";
                     $failure = 1;
@@ -585,18 +703,22 @@ sub run {
             }
         }
 
-        if ($failure) {
+        if ($failure) 
+        {
             $global->{perl}->{$major}->{$minor}->{state}->{stage} = 'download_bad';
             unlink @{[$download[0]->{local_path},$download[1]->{local_path}]};
         }
+        else 
+        {
+            $global->{perl}->{$major}->{$minor}->{state}->{stage} = 'download_ok';
 
-        # Extract those that passed checks 
-        if ($env->{state}->{stage} eq 'download_ok') {
             my $local_fn = "work/".$env->{filename};
             print "Extracting for: $local_fn\n";
+
             $global->{tar}->setcwd($global->{config}->{'work-dir'});
             $global->{tar}->read($local_fn);
             $global->{tar}->extract();
+            
             print "Extraction complete for: $local_fn\n";
 
             {
