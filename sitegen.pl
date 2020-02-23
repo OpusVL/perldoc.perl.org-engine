@@ -34,6 +34,10 @@ our $global = {
         build           =>  2,
         pod             =>  3,
         done            =>  4
+    },
+    dev => {
+        enabled => 0,
+        forced => {},
     }
 };
 
@@ -80,11 +84,11 @@ sub main {
                     $global->{modules}->{extract_pod}->run($major,$minor);
                 }
             }
-
-            # Re make the index once more with the latest set of versions too
-            $global->{modules}->{extract_pod}->make_index();
         }
     }
+
+    # Re make the index once more with the latest set of versions too
+    $global->{modules}->{extract_pod}->make_index();
 
     return 0;
 }
@@ -117,8 +121,8 @@ sub engine {
         my $dev_mode    = 0;
 
         if ($ENV{'DEV_MODE'}) {
-            $dev_mode = $ENV{'DEV_MODE'};
-            print "Dev mode enabled, level: $dev_mode\n";
+            $global->{dev}->{enabled} = $ENV{'DEV_MODE'};
+            print 'Dev mode enabled, level: '.$global->{dev}->{enabled}."\n";
         }
 
         print "Perl($major.$minor): state($state/$state_only) = $level/$level_max\n";
@@ -162,7 +166,7 @@ sub engine {
                 $global->{perl}->{$major}->{$minor} =
                     $global->{modules}->{make_env}->build($major,$minor);
             }
-            elsif ($level == 2 || $dev_mode == 1) 
+            elsif ($level == 2) 
             {
                 # We made the build lets do the POD
                 $global->{perl}->{$major}->{$minor} =
@@ -275,6 +279,14 @@ sub make_index {
     my $latest = { count => 0, major => 0, minor => 0 };
 
     chdir $Bin;
+    
+    my $cwd = cwd;
+
+    $global->{tt} => Template->new(
+        INCLUDE_PATH => "$cwd/templates/"
+    );
+
+    print "Generating versions.json\n";
 
     foreach my $major (keys %{ $global->{perl} }) {
         foreach my $minor (keys %{ $global->{perl}->{$major} }) {
@@ -318,34 +330,15 @@ sub make_index {
         $ttenv->{me}->{major} = $major;
         $ttenv->{me}->{minor} = $minor;
 
+        # Path to the root of the output/version directory
+        my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
         {
             my $output = "";
             $global->{tt}->process('templates/main_index.tt',$ttenv,\$output);
 
             # Write the output to the output directory
-            my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
             make_path($index_path);
-            write_html($index_path."/index.html",$output);
-        }
-
-        {
-            my $output = "";
-            $global->{tt}->process('templates/404.tt',$ttenv,\$output);
-
-            # Write the output to the output directory
-            my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
-            make_path($index_path);
-            write_html($index_path."/404.html",$output);
-        }
-
-        {
-            my $output = "";
-            $global->{tt}->process('templates/about.tt',$ttenv,\$output);
-
-            # Write the output to the output directory
-            my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
-            make_path($index_path);
-            write_html($index_path."/404.html",$output);
+            write_html("$index_path/index.html",$output);
         }
     }
 
@@ -354,6 +347,18 @@ sub make_index {
         warn "No main_index.tt found";
         die;
     }
+
+    # Create an aboutus page
+    {
+        my $output = "";
+        $global->{tt}->process('templates/about.tt',$ttenv,\$output);
+
+        my $about_path = join('/',$global->{config}->{'pod-dir'},'about.html');
+
+        # Write the output to the output directory
+        write_html($about_path,$output);
+    }
+
 
     # Lets create an index.html in the output dir
     my $output = "";
@@ -368,9 +373,9 @@ sub make_index {
     my $vconcat = join('.',5,$latest->{major},$latest->{minor});
     my $link_latest_base = join('',$global->{config}->{'pod-dir'},$vconcat);
 
-    # Write the passed jsons out to passed.json
+    # Write the versions jsons out to versions.json
     my $json_path = join('/',$global->{config}->{'pod-dir'},'versions.json');
-    print "JSON: Writing versions.json to: '$json_path'";
+
     open(my $fh,'>',$json_path);
     print $fh $global->{js}->encode($ttenv);
     close($fh);
