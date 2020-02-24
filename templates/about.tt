@@ -280,34 +280,62 @@
 
 
         <div class="row jumbotron pl-5 pr-5">
-        <div class="col-sm-10 offset-sm-1 col-xl-6 offset-xl-3 text-center">
-            <h1 class="h2">Welcome to Perldoc - the official</h1>
-            <h2 class="h1">Perl 5.[% major %].[% minor %] documentation site
-            </h2>
-            <p>The content of this documentation site is built automatically -
-            directly from the documentation created by the Perl developers.
-            </p>
-            <p>To find out what"s new in Perl 5.[% major %].[% minor %] take a
-            look at the
-            <a
-                href="/5.[% major %].[% minor %]/perldelta.html">perldelta</a>
-            page.
-            </p>
-            <p>If you are new to the Perl language, good places to start
-            reading are the introduction and overview at
-            <a
-                href="/5.[% major %].[% minor %]/perlintro.html">perlintro</a>,
-            and the
-            <a href="/5.[% major %].[% minor %]/index-faq.html">FAQ
-                section</a>, which provides answers to over 300 common
-            questions.
-            </p>
-            <p>
-            Looking for plug-ins and extensions? visit <a
-                href="//www.cpan.org/" rel="noopener">CPAN</a> and
-            access over 180,000 Perl modules.
-            </p>
-        </div>
+            <div class="col-sm-10 offset-sm-1 col-xl-6 offset-xl-3 text-left">
+                <h1 class="h2">About Perldoc</h1>
+                <h2 class="h1">A brief history</h2>
+                    <p>The first web-based perldoc started October 2000[1]. In later years, it had reliability issues due to demand and had outgrown the original platform.</p>
+
+                    <p>It was picked up by JJ Allen in January 2005 as “the result of a project to produce a version of the Perl documentation set suitable for off-line use.”[2] and originally hosted at perldoc.perldrunks.org.</p>
+
+                    <p><a href="http://perl.jonallen.info/projects/perldoc">http://perl.jonallen.info/projects/perldoc</a>.</p>
+
+                    <p>Later in 2005 it was promoted to <a href="http://perldoc.perl.org/">http://perldoc.perl.org/</a>.</p>
+
+                    <p>Major design updates were made in 2009 at QA Hackathon Birmingham, details availible here: <a href="https://colinnewell.wordpress.com/2009/03/31/birmingham-perl-qa-hackathon/">https://colinnewell.wordpress.com/2009/03/31/birmingham-perl-qa-hackathon/</a>.</p>
+
+                    <p>During the QA Hackathon Rugby 2016, Babs Veloso, who has worked on a number of other perl.org websites, came up with the visual design and developed the front-end code</p>.
+
+                    <p>John Mica and Paul Webster from OpusVL then re-wrote the back-end from my previous version (while fixing a lot of bugs and improving the build process). They integrated Babs’s front-end designs and worked with Ask and Robert from Perl.org on the hosting and deployment. Then, after a testing phase with a few other members of the community, the new site was launched.</p>
+
+                    <p>This led to the current <A href="http://Perldoc.perl.org">http://Perldoc.perl.org</a> being deployed in 2019.</p>
+
+                <h2 class="h1">How does it work?</h2>
+
+                    <p>A key requirement for perldoc is performance, reliability, ability to download for local use and mirroring.</p>
+
+                    <p>Therefore <a href="https://perldoc.perl.org">perldoc.perl.org</a> is built using a static site generator rather than being served dynamically.</p>
+
+                    <p>The HTML output of the build process is pushed to a shared git repository from which perl.org pulls on a regular basis.</p>
+
+                    <p>Anyone can ‘git clone’ the full site if a local / offline copy is required.</p>
+
+                    <p>Should the maintainer go AWOL, anyone else can pick up the builder code from GitHub and be granted access to push to <a href="https://perl.org">perl.org</a>’s repo.</p>
+
+                    <h3 style="color:#0065a2">daily build process</h3>
+                    <ul style="text-align: left">
+                        <li>reads CPAN daily for new versions of Perl</li>
+                        <li>if so, downloads Perl and compiles it</li>
+                        <li>then rebuilds documentation set from scratch</li>
+                        <li>changes to templates from git also get processed daily</li>
+                        <li>builds local instance of compiled files, git commit and push</li>
+                        <li>hosted server git pulls to load the site, then statically served</li>
+                        <li>This model fits with the perl.org infrastructure (eg, supports geographical mirroring), and importantly it allows the site to be independent of any third party maintainer or hosting environment - everything is within perl.org’s control.</li>
+                    </ul>
+
+                <ul>
+                    <li><a href="https://github.com/OpusVL/perldoc.perl.org">Repository - for Issues only</a></li>
+                    <li><a href="https://github.com/OpusVL/perldoc.perl.org-engine">Repository - for the actual code</a></li>
+                    <li><a href="https://github.com/OpusVL/perldoc.perl.org-engine">Repository - for the output HTML</a></li>
+                </ul>
+
+                <h2>Maintainer</h2>
+                    <p>Maintainer of this is <a href="mailto:paul.webster@opusvl.com">Paul Webster</a> who is sponsored by <a href="https://OpusVL.com">OpusVL</a>.</p>
+                    <h2>References</h2>
+                    <ul>
+                        <li>[1] - <a href="https://web.archive.org/web/20001018001325/http://www.perldoc.com/">https://web.archive.org/web/20001018001325/http://www.perldoc.com/</a></li>
+                        <li>[2] - <a href="https://web.archive.org/web/20050121063106/http://perl.jonallen.info/projects/perldoc">https://web.archive.org/web/20050121063106/http://perl.jonallen.info/projects/perldoc</a></li>
+                    </ul>
+            </div>
         </div>
         <main class="row main-content pb-5 pt-5" id='content'>
         <div class="col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
