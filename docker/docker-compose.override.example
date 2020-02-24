@@ -1,18 +1,6 @@
-#
-# This allows you to override the entrypoint to the system as well as the 'work' directory
-# where all the perls are built.
-#
-
 version: "3"
 services:
   perldoc:
+    image: quay.io/opusvl/perldoc:release
     volumes:
-      - "$HOME/perldoc.perl.org-engine:/root/dev-src"
-      - "$HOME/.work:/root/perldoc.perl.org/work"
-      - "./dev-entrypoint.sh:/entrypoint.sh"
-  nginx:
-    image: nginx:latest
-    volumes:
-      - "$HOME/.work/output:/usr/share/nginx/html:ro"
-    ports:
-      - 0.0.0.0:8080:80
+      - "$HOME/.tmp/perldoc/work:/root/perldoc.perl.org/work"
