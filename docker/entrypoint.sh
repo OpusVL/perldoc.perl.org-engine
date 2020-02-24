@@ -15,7 +15,7 @@ echo "Cloning engine"
 git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
 echo "Copying engine into work base"
 mkdir -p perldoc.perl.org
-cp -Rvp engine/* perldoc.perl.org/
+cp -Rp engine/* perldoc.perl.org/
 echo "Removing unused directories"
 rm -Rf engine
 echo "Swapping into work base"
@@ -38,7 +38,7 @@ do
     ln -sf $latest_perl .default
     git add .
     git commit -am "AutoCommit"
-#    git push -f origin master
+    git push -f origin master
     echo "Sleeping for 24 hours before retrying";
     perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
 done

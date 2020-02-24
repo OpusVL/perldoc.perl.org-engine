@@ -1,0 +1,31 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Error getting the page requested | Documentation - Perl Language" />
+    <link rel="icon" href="/public/img/favicon.ico" />
+    <title>Error | Documentation - Perl Language</title>
+    <link href="/public/css/main.min.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900"
+        rel="stylesheet" type="text/css" />
+    <script>
+        window.ga =
+            window.ga ||
+            function () {
+                (ga.q = ga.q || []).push(arguments);
+            };
+        ga.l = +new Date();
+        ga('create', 'UA-1892152-2', 'auto'); // JJ's account
+        ga('create', 'UA-50555-3', 'auto', 'perlOrg'); // perl.org account
+        ga('require', 'outboundLinkTracker', {
+            events: ['click', 'auxclick', 'contextmenu']
+        });
+        ga('require', 'maxScrollTracker');
+        ga('send', 'pageview');
+        ga('perlOrg.send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js">
+    </script>
+    <script async src="/public/js/tracking.min.js"></script>
+</head>
