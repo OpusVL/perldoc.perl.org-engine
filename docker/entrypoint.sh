@@ -39,7 +39,7 @@ do
     ln -sf $latest_perl .default
     git add .
     git commit -am "AutoCommit"
-    git push -f origin master
+    #git push -f origin master
     echo "Sleeping for 24 hours before retrying";
     perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
 done
