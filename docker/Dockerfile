@@ -1,4 +1,4 @@
-FROM quay.io/opusvl/opusvl-perl-base:release-3 AS osbase
+FROM debian:stable AS osbase
 LABEL maintainer OpusVL <support@opusvl.com>
 
 # Become god
