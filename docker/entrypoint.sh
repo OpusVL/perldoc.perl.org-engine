@@ -16,7 +16,7 @@ do
     rm -Rf en* perldoc* output*
     echo "Cloning engine"
     git clone git@github.com:OpusVL/perldoc.perl.org-engine.git engine
-    cd engine && git co develop
+    cd engine && git checkout develop && cd ..
     echo "Copying engine into work base"
     mkdir -p perldoc.perl.org
     cp -Rp engine/* perldoc.perl.org/
