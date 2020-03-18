@@ -282,7 +282,7 @@ sub make_index {
     
     my $cwd = cwd;
 
-    $global->{tt} => Template->new(
+    $global->{tt} = Template->new(
         INCLUDE_PATH => "$cwd/templates/"
     );
 
