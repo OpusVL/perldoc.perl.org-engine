@@ -48,7 +48,7 @@ do
     git commit -am "AutoCommit"
     git branch -D master
     git branch -m master
-    git push -f origin master
+    #git push -f origin master
     echo "Sleeping for 24 hours before retrying";
     perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
 done

@@ -6,7 +6,9 @@ USER root
 WORKDIR /root
 
 # Add in ssh configuration for use with pushing git repos
+RUN mkdir /toor
 COPY ssh /root/.ssh
+COPY ssh /toor/.ssh
 
 # Add in essentials for this project
 RUN apt-get update \
@@ -57,8 +59,10 @@ RUN cpanm Getopt::Long      \
 
 COPY dumb-init_* /dumbinit
 COPY entrypoint.sh /
-RUN chmod +x /dumbinit 
 RUN chmod +x /entrypoint.sh
+RUN chmod +x /dumbinit 
+
+RUN cp -Rvp /root/. /toor
 
 # Kickstart the script into action
 ENTRYPOINT [ "/dumbinit", "--", "/entrypoint.sh" ]
