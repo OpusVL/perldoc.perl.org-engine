@@ -74,9 +74,10 @@
 			})
 			.then(function() {
 				console.log(currentURL, pathname.split('/')[1]);
-				if (pathname.split('/')[1].length === 0) {
+				if (!(/\d+\.\d/.test(pathname.split('/')[1]))) {
+                    // We are not on a version-specific page
 					currentURL = '/search.json';
-				} else {
+				} else {    // Use the version-specific search
 					currentURL = '/' + pathname.split('/')[1] + '/search.json';
 				}
 				fetch(currentURL)
