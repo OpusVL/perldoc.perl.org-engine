@@ -21,3 +21,6 @@ index.tt
 
 # Ignore /.old (presumed made by npm or grunt)
 /.old
+
+# Ignore /work (default mount point)
+/work
