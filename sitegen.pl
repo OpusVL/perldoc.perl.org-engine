@@ -118,7 +118,7 @@ sub engine {
     {
         my $level_max   = $global->{order_index}->{$global->{order}->[-1]};
         my $level       = $global->{order_index}->{$state_only};
-        my $dev_mode    = 0;
+        my $dev_mode    = 1;
 
         if ($ENV{'DEV_MODE'}) {
             $global->{dev}->{enabled} = $ENV{'DEV_MODE'};
@@ -282,7 +282,7 @@ sub make_index {
     
     my $cwd = cwd;
 
-    $global->{tt} => Template->new(
+    $global->{tt} = Template->new(
         INCLUDE_PATH => "$cwd/templates/"
     );
 

@@ -24,6 +24,8 @@ echo "Creating work directory"
 mkdir -p work
 echo "Changing into workbase"
 cd work
+echo "Removing .git (to stop recursive git repos with output)"
+rm -Rf .git*
 echo "Removing output"
 rm -Rf output
 echo "Fetching latest output"
@@ -35,9 +37,15 @@ do
     perl sitegen.pl
     cd work/output
     latest_perl=$(perl -MJSON -MData::Dumper -e 'local $/;open($fh,"<","versions.json");$j=decode_json(<$fh>);print join(".",5,$j->{latest}->{major},$j->{latest}->{minor})')
-    ln -sf $latest_perl .default
-    git add .
+    pwd
+    unlink .default || echo "No .default found"
+    ln -svf $latest_perl .default
+    cp -f .default/search.json .
+    git checkout --orphan latest
+    git add -A
     git commit -am "AutoCommit"
+    git branch -D master
+    git branch -m master
     git push -f origin master
     echo "Sleeping for 24 hours before retrying";
     perl -e 'print "Sleeping 24 hours\n"; sleep(60*60*24)'
