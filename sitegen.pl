@@ -18,7 +18,7 @@ use Getopt::Long;
 our $global = {
     ua      => do { my $ua = LWP::UserAgent->new; $ua->timeout(10); $ua->env_proxy; $ua },
     tar     => Archive::Tar->new,
-    tt      => Template->new(),
+    tt      => Template->new({INCLUDE_PATH => '/root/perldoc.perl.org/'}),
     js      => JSON::MaybeXS->new(),
     rebuild => 0,
     modules => {
@@ -286,10 +286,6 @@ sub make_index {
     
     my $cwd = cwd;
 
-    $global->{tt} = Template->new(
-        INCLUDE_PATH => "$cwd/templates/"
-    );
-
     print "Generating versions.json\n";
 
     foreach my $major (keys %{ $global->{perl} }) {
@@ -336,6 +332,7 @@ sub make_index {
 
         # Path to the root of the output/version directory
         my $index_path = join('/',$global->{config}->{'pod-dir'},"5.$major.$minor");
+
         {
             my $output = "";
             $global->{tt}->process('templates/main_index.tt',$ttenv,\$output);
