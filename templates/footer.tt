@@ -12,9 +12,9 @@
                        </li>
                        <li>Perldoc site development sponsored by
                            <a href="//opusvl.com" rel="noopener">
-                           <img style="margin: 20px 20px 5px 10px" class="opus-logo" src="/public/img/opusvl_logo.svg" alt="OpusVL Logo">
+                           <img class="opus-logo" src="/public/img/opusvl_logo.svg" alt="OpusVL Logo">
                         </a>
-                    <li><span class="about_perldoc"><a href="//about.html">About PerlDOC</a></span>
+                    <li><span class="about_perldoc"><a href="/5.[% major %].[% minor %]/about.html">About PerlDOC</a></span>
                     </li>
                        </li>
                    </ul>
