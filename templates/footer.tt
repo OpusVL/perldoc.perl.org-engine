@@ -14,7 +14,6 @@
                            <a href="//opusvl.com" rel="noopener">
                            <img class="opus-logo" src="/public/img/opusvl_logo.svg" alt="OpusVL Logo">
                         </a>
-                    <li><span class="about_perldoc"><a href="/about.html">About PerlDOC</a></span>
                     </li>
                        </li>
                    </ul>
@@ -102,10 +101,6 @@
                                    <a
                                        href="/5.[% major %].[% minor %]/index-platforms.html">Platforms</a>
                                </li>
-                            <li>
-                                <a
-                                    href="/5.[% major %].[% minor %]/index-about.html">About</a>
-                            </li>
                            </ul>
                        </div>
                    </div>
