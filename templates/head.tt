@@ -6,6 +6,7 @@
     <link rel="icon" href="/public/img/favicon.ico" />
     <title>Error | Documentation - Perl Language</title>
     <link href="/public/css/main.min.css" rel="stylesheet" />
+    <link href="/public/css/extra.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900"
         rel="stylesheet" type="text/css" />
