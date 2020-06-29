@@ -437,7 +437,7 @@
                 <a href="//opusvl.com" rel="noopener"><img class="opus-logo"
                     src="/public/img/opusvl_logo.svg" alt="OpusVL Logo"></a>
                 </li>
-                <li><span class="about_perldoc"><a href="/5.[% major %].[% minor %]/about.html">About PerlDOC</a></span>
+                <li><span class="about_perldoc"><a href="/about.html">About PerlDOC</a></span>
                 </li>
             </ul>
             </div>
