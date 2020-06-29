@@ -1,0 +1,6 @@
+version: "3"
+services:
+  perldoc:
+    volumes:
+      - "$PWD/../../var/export:/root/perldoc.perl.org/work"
+      
