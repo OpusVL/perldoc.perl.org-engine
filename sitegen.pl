@@ -65,6 +65,10 @@ sub main {
             }
         }
 
+        # Regnerate the index and versions.json
+        $global->{modules}->{extract_pod}->make_index();
+
+
         # Regenerate the index if it took more than one iteration 
         # to trigger this.
         if ($updated == 0 && $runcount > 1) {
@@ -72,7 +76,7 @@ sub main {
             $global->{changed} = 0;
 
             # Regnerate the index and versions.json
-            $global->{modules}->{extract_pod}->make_index();
+            #$global->{modules}->{extract_pod}->make_index();
 
             # Regenerate all the PODs that rely on versions.json
             # for there templates
